@@ -1,10 +1,8 @@
 package com.naukma.springproject.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class StudentEntity{
@@ -17,11 +15,22 @@ public class StudentEntity{
     private String name;
     private String surname;
     private int grade;
+
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "student",
+            cascade = CascadeType.ALL)
+    Set<StudentOrganization> studentOrganizations;
+
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "student",
+            cascade = CascadeType.ALL)
+    Set<StudentProject> studentProjects;
+
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Id
     public Long getId() {
         return id;
     }
@@ -66,4 +75,19 @@ public class StudentEntity{
         this.grade = grade;
     }
 
+    public Set<StudentOrganization> getStudentOrganizations() {
+        return studentOrganizations;
+    }
+
+    public void setStudentOrganizations(Set<StudentOrganization> studentOrganizations) {
+        this.studentOrganizations = studentOrganizations;
+    }
+
+    public Set<StudentProject> getStudentProjects() {
+        return studentProjects;
+    }
+
+    public void setStudentProjects(Set<StudentProject> studentProjects) {
+        this.studentProjects = studentProjects;
+    }
 }

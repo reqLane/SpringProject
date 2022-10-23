@@ -15,7 +15,15 @@ public class AdminServiceImpl implements AdminService{
         this.adminRepository = adminRepository;
     }
 
-    public void register(AdminEntity adminEntity){}
+    public void register(AdminEntity adminEntity){
+        adminRepository.save(adminEntity);
+    }
 
-    public void delete(Long adminId){}
+    public AdminEntity get(Long id) {
+        return adminRepository.findById(id).get();
+    }
+
+    public void delete(Long adminId){
+        adminRepository.deleteById(adminId);
+    }
 }

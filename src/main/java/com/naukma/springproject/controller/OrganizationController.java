@@ -1,7 +1,7 @@
 package com.naukma.springproject.controller;
 
-import com.naukma.springproject.entity.StudentOrganizationEntity;
-import com.naukma.springproject.service.StudentOrganizationService;
+import com.naukma.springproject.entity.OrganizationEntity;
+import com.naukma.springproject.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.ResponseEntity;
@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/organization")
-@ConditionalOnBean(StudentOrganizationService.class)
-public class StudentOrganizationController {
-    private StudentOrganizationService studentOrganizationService;
+@ConditionalOnBean(OrganizationService.class)
+public class OrganizationController {
+    private OrganizationService organizationService;
 
     @Autowired
-    public StudentOrganizationController(StudentOrganizationService studentOrganizationService) {
-        this.studentOrganizationService = studentOrganizationService;
+    public OrganizationController(OrganizationService organizationService) {
+        this.organizationService = organizationService;
     }
 
     @PostMapping("/register")
-    public ResponseEntity registerOrganization(@RequestBody StudentOrganizationEntity studentOrganizationEntity){
+    public ResponseEntity registerOrganization(@RequestBody OrganizationEntity organizationEntity){
         try{
-            studentOrganizationService.register(studentOrganizationEntity);
+            organizationService.register(organizationEntity);
             return ResponseEntity.ok("Organization created");
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Error 404");
@@ -29,9 +29,9 @@ public class StudentOrganizationController {
     }
 
     @DeleteMapping("/delete/{organizationId}")
-    public ResponseEntity deleteOrganization(@RequestParam Long organizationId){
+    public ResponseEntity deleteOrganization(@PathVariable Long organizationId){
         try{
-            studentOrganizationService.delete(organizationId);
+            organizationService.delete(organizationId);
             return ResponseEntity.ok("Organization deleted");
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Error 404");

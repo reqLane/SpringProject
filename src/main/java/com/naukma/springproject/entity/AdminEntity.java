@@ -10,6 +10,7 @@ public class AdminEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String login;
     private String password;
     private String name;
@@ -20,7 +21,6 @@ public class AdminEntity{
         this.id = id;
     }
 
-    @Id
     public Long getId() {
         return id;
     }

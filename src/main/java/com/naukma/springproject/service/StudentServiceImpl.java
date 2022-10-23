@@ -16,11 +16,13 @@ public class StudentServiceImpl implements StudentService{
     }
 
 
-    public void register(StudentEntity studentEntity){}
+    public void register(StudentEntity studentEntity){
+        studentRepository.save(studentEntity);
+    }
 
     @Override
     public void delete(Long studentId) {
-
+        studentRepository.deleteById(studentId);
     }
 
 

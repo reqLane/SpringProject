@@ -19,17 +19,27 @@ public class AdminController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity registerAdmin(@RequestBody AdminEntity adminEntity){
+    public ResponseEntity registerAdmin(/*@RequestBody AdminEntity adminEntity*/){
         try{
-            adminService.register(adminEntity);
+            adminService.register(new AdminEntity());
             return ResponseEntity.ok("Admin created");
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Error 404");
+        }
+    }
+
+    @GetMapping("/get/{adminId}")
+    public ResponseEntity getAdmin(@PathVariable Long adminId){
+        try{
+            return ResponseEntity.ok(adminService.get(adminId));
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Error 404");
         }
     }
 
     @DeleteMapping("/delete/{adminId}")
-    public ResponseEntity deleteAdmin(@RequestParam Long adminId){
+    public ResponseEntity deleteAdmin(@PathVariable Long adminId){
         try{
             adminService.delete(adminId);
             return ResponseEntity.ok("Admin deleted");
