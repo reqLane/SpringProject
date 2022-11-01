@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration packages="com.naukma.springproject.logging.appender" status="INFO">
+    <Properties>
+
+    </Properties>
+    <Appenders>
+        <Console>
+
+        </Console>
+        <CustomConsoleAppender name="CustomConsoleAppender"/>
+    </Appenders>
+    <Loggers>
+
+        <Root level="INFO">
+            <AppenderRef ref="CustomConsoleAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>

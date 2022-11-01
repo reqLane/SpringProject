@@ -1,16 +1,22 @@
 package com.naukma.springproject;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.context.annotation.Profile;
-import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
-public class SpringProjectApplication {
+public class SpringProjectApplication implements CommandLineRunner {
+
+    Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) {
         SpringApplication.run(SpringProjectApplication.class, args);
+    }
 
+    @Override
+    public void run(String... args) throws Exception {
+        logger.info("MESSAGE 222");
     }
 }
