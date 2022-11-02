@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration packages="com.naukma.springproject.logging.appender" status="INFO">
     <Properties>
-
+        <Property name="LOG_PATTERN">
+            %d{yyyy-MM-dd HH:mm:ss} %5p : (%X{details}) %m%n%ex
+        </Property>
     </Properties>
     <Appenders>
-        <Console>
-
-        </Console>
-        <CustomConsoleAppender name="CustomConsoleAppender"/>
+        <CustomConsoleAppender name="console_out">
+<!--            <CustomLayout/>-->
+            <PatternLayout>
+                <Pattern>${LOG_PATTERN}</Pattern>
+            </PatternLayout>
+            <MarkerFilter marker="IMPORTANT" onMatch="DENY" onMismatch="ACCEPT"/>
+        </CustomConsoleAppender>
+        <CustomFileAppender name="file_out" fileName="logs/logs.log">
+            <CustomLayout/>
+            <MarkerFilter marker="IMPORTANT" onMatch="ACCEPT" onMismatch="DENY"/>
+        </CustomFileAppender>
     </Appenders>
     <Loggers>
-
+        <Logger name="FileLogger" level="INFO">
+            <AppenderRef ref="file_out"/>
+        </Logger>
         <Root level="INFO">
-            <AppenderRef ref="CustomConsoleAppender"/>
+            <AppenderRef ref="console_out"/>
         </Root>
     </Loggers>
 </Configuration>
