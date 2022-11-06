@@ -6,9 +6,7 @@ public interface AdminService {
 
     void register(AdminEntity adminEntity);
 
-    default AdminEntity get(Long id) {
-        return null;
-    }
+    AdminEntity get(Long adminId);
 
     void delete(Long adminId);
 }

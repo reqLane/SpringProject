@@ -7,11 +7,13 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @RestController
 @RequestMapping("/admin")
 @ConditionalOnBean(AdminService.class)
 public class AdminController {
-    private AdminService adminService;
+    private final AdminService adminService;
 
     @Autowired
     public AdminController(AdminService adminService) {
@@ -19,9 +21,9 @@ public class AdminController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity registerAdmin(/*@RequestBody AdminEntity adminEntity*/){
+    public ResponseEntity registerAdmin(@RequestBody AdminEntity adminEntity){
         try{
-            adminService.register(new AdminEntity());
+            adminService.register(adminEntity);
             return ResponseEntity.ok("Admin created");
         }catch (Exception e){
             e.printStackTrace();
@@ -46,5 +48,11 @@ public class AdminController {
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Error 404");
         }
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public String handleException(NoSuchElementException e) {
+        //logging error
+        return e.getMessage();
     }
 }

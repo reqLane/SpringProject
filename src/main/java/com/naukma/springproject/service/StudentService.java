@@ -6,5 +6,7 @@ public interface StudentService {
 
     void register(StudentEntity studentEntity);
 
+    StudentEntity get(Long studentId);
+
     void delete(Long studentId);
 }

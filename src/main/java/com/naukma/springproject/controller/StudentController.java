@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @ConditionalOnBean(StudentService.class)
 public class StudentController {
 
-    private StudentService studentService;
+    private final StudentService studentService;
 
     @Autowired
     public StudentController(StudentService studentService) {
@@ -26,6 +26,15 @@ public class StudentController {
             studentService.register(studentEntity);
             return ResponseEntity.ok("Student created");
         }catch (Exception e){
+            return ResponseEntity.badRequest().body("Error 404");
+        }
+    }
+
+    @GetMapping("/get/{studentId}")
+    public ResponseEntity getStudent(@PathVariable Long studentId) {
+        try {
+            return ResponseEntity.ok(studentService.get(studentId));
+        } catch(Exception e) {
             return ResponseEntity.badRequest().body("Error 404");
         }
     }

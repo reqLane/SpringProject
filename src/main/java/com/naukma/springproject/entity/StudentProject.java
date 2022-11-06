@@ -21,7 +21,7 @@ public class StudentProject {
     @JoinColumn(name = "project_id")
     ProjectEntity project;
 
-    int hours;
+    Long hours;
 
 
     public StudentProjectKey getId() {
@@ -48,11 +48,11 @@ public class StudentProject {
         this.project = project;
     }
 
-    public int getHours() {
+    public Long getHours() {
         return hours;
     }
 
-    public void setHours(int hours) {
+    public void setHours(Long hours) {
         this.hours = hours;
     }
 }

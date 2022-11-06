@@ -5,10 +5,12 @@ import com.naukma.springproject.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service
 public class AdminServiceImpl implements AdminService{
 
-    private AdminRepository adminRepository;
+    private final AdminRepository adminRepository;
 
     @Autowired
     public AdminServiceImpl(AdminRepository adminRepository) {
@@ -19,8 +21,11 @@ public class AdminServiceImpl implements AdminService{
         adminRepository.save(adminEntity);
     }
 
-    public AdminEntity get(Long id) {
-        return adminRepository.findById(id).get();
+    public AdminEntity get(Long adminId) {
+        if(adminRepository.findById(adminId).isEmpty())
+            throw new NoSuchElementException("Admin not found.");
+
+        return adminRepository.findById(adminId).get();
     }
 
     public void delete(Long adminId){

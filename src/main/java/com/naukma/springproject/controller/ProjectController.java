@@ -1,17 +1,21 @@
 package com.naukma.springproject.controller;
 
 import com.naukma.springproject.entity.ProjectEntity;
+import com.naukma.springproject.exception.StudentAlreadyEnrolledException;
+import com.naukma.springproject.exception.StudentIsNotEnrolledException;
 import com.naukma.springproject.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @RestController
 @RequestMapping("/project")
 @ConditionalOnBean(ProjectService.class)
 public class ProjectController {
-    ProjectService projectService;
+    private final ProjectService projectService;
 
     @Autowired
     public ProjectController(ProjectService projectService) {
@@ -29,6 +33,38 @@ public class ProjectController {
         }
     }
 
+    @PostMapping("/{projectId}/addStudent/{studentId}")
+    public ResponseEntity addStudent(@PathVariable Long projectId,
+                                     @PathVariable Long studentId) {
+        try{
+            projectService.addStudent(projectId, studentId);
+            return ResponseEntity.ok("Student added to project");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Error 404");
+        }
+    }
+
+    @GetMapping("/get/{projectId}")
+    public ResponseEntity getProject(@PathVariable Long projectId) {
+        try {
+            return ResponseEntity.ok(projectService.get(projectId));
+        } catch(Exception e) {
+            return ResponseEntity.badRequest().body("Error 404");
+        }
+    }
+
+    @PutMapping("/{projectId}/members/{studentId}/setHours")
+    public ResponseEntity setHoursForMember(@PathVariable Long projectId,
+                                            @PathVariable Long studentId,
+                                            @RequestParam Long hoursAmount) {
+        try {
+            projectService.setHoursForMember(projectId, studentId, hoursAmount);
+            return ResponseEntity.ok("Hours set for the student");
+        } catch(Exception e) {
+            return ResponseEntity.badRequest().body("Error 404");
+        }
+    }
+
     @DeleteMapping("/delete/{studentProjectId}")
     public ResponseEntity deleteFromOrganization(@PathVariable Long studentProjectId){
         try{
@@ -39,4 +75,19 @@ public class ProjectController {
         }
     }
 
+    @ExceptionHandler(NoSuchElementException.class)
+    public String handleException(NoSuchElementException e) {
+        //logging error
+        return e.getMessage();
+    }
+    @ExceptionHandler(StudentAlreadyEnrolledException.class)
+    public String handleException(StudentAlreadyEnrolledException e) {
+        //logging error
+        return e.getMessage();
+    }
+    @ExceptionHandler(StudentIsNotEnrolledException.class)
+    public String handleException(StudentIsNotEnrolledException e) {
+        //logging error
+        return e.getMessage();
+    }
 }
