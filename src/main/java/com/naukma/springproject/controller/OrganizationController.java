@@ -1,14 +1,15 @@
 package com.naukma.springproject.controller;
 
-import com.naukma.springproject.entity.OrganizationEntity;
 import com.naukma.springproject.exception.StudentAlreadyEnrolledException;
+import com.naukma.springproject.model.Organization;
 import com.naukma.springproject.service.OrganizationService;
-import org.apache.logging.log4j.ThreadContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -23,9 +24,9 @@ public class OrganizationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity registerOrganization(@RequestBody OrganizationEntity organizationEntity){
+    public ResponseEntity registerOrganization(@Valid @RequestBody Organization organization){
         try{
-            organizationService.register(organizationEntity);
+            organizationService.register(organization);
             return ResponseEntity.ok("Organization created");
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Error 404");
@@ -69,6 +70,11 @@ public class OrganizationController {
     }
     @ExceptionHandler(StudentAlreadyEnrolledException.class)
     public String handleException(StudentAlreadyEnrolledException e) {
+        //logging error
+        return e.getMessage();
+    }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public String handleException(MethodArgumentNotValidException e) {
         //logging error
         return e.getMessage();
     }

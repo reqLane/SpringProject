@@ -1,5 +1,7 @@
 package com.naukma.springproject.entity;
 
+import com.naukma.springproject.model.Organization;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -21,6 +23,11 @@ public class OrganizationEntity {
             cascade = CascadeType.ALL)
     Set<StudentOrganization> studentOrganizations;
 
+    public static OrganizationEntity toEntity(Organization model) {
+        OrganizationEntity entity = new OrganizationEntity();
+        entity.setName(model.getName());
+        return entity;
+    }
 
     public void setId(Long id) {
         this.id = id;

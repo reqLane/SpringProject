@@ -1,12 +1,12 @@
 package com.naukma.springproject.service;
 
-import com.naukma.springproject.entity.StudentEntity;
+import com.naukma.springproject.model.Student;
 
 public interface StudentService {
 
-    void register(StudentEntity studentEntity);
+    void register(Student student);
 
-    StudentEntity get(Long studentId);
+    Student get(Long studentId);
 
     void delete(Long studentId);
 }

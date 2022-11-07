@@ -1,5 +1,7 @@
 package com.naukma.springproject.entity;
 
+import com.naukma.springproject.model.Project;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -20,6 +22,11 @@ public class ProjectEntity {
             cascade = CascadeType.ALL)
     Set<StudentProject> studentProjects;
 
+    public static ProjectEntity toEntity(Project model) {
+        ProjectEntity entity = new ProjectEntity();
+        entity.setName(model.getName());
+        return entity;
+    }
 
     public void setId(Long id) {
         this.id = id;

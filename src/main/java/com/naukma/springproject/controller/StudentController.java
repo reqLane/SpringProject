@@ -1,11 +1,14 @@
 package com.naukma.springproject.controller;
 
-import com.naukma.springproject.entity.StudentEntity;
+import com.naukma.springproject.model.Student;
 import com.naukma.springproject.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/student")
@@ -21,9 +24,9 @@ public class StudentController {
 
 
     @PostMapping("/register")
-    public ResponseEntity registerStudent(@RequestBody StudentEntity studentEntity){
+    public ResponseEntity registerStudent(@Valid @RequestBody Student student){
         try{
-            studentService.register(studentEntity);
+            studentService.register(student);
             return ResponseEntity.ok("Student created");
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Error 404");
@@ -47,5 +50,11 @@ public class StudentController {
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Error 404");
         }
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public String handleException(MethodArgumentNotValidException e) {
+        //logging error
+        return e.getMessage();
     }
 }

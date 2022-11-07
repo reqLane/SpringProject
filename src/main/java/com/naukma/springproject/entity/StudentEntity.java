@@ -1,6 +1,8 @@
 package com.naukma.springproject.entity;
 
 
+import com.naukma.springproject.model.Student;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -14,7 +16,6 @@ public class StudentEntity{
     private String password;
     private String name;
     private String surname;
-    private int grade;
 
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "student",
@@ -26,6 +27,14 @@ public class StudentEntity{
             cascade = CascadeType.ALL)
     Set<StudentProject> studentProjects;
 
+    public static StudentEntity toEntity(Student model) {
+        StudentEntity entity = new StudentEntity();
+        entity.setLogin(model.getLogin());
+        entity.setPassword(model.getPassword());
+        entity.setName(model.getName());
+        entity.setSurname(model.getSurname());
+        return entity;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -65,14 +74,6 @@ public class StudentEntity{
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public int getGrade() {
-        return grade;
-    }
-
-    public void setGrade(int grade) {
-        this.grade = grade;
     }
 
     public Set<StudentOrganization> getStudentOrganizations() {

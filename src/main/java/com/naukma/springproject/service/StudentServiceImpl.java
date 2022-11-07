@@ -1,6 +1,7 @@
 package com.naukma.springproject.service;
 
 import com.naukma.springproject.entity.StudentEntity;
+import com.naukma.springproject.model.Student;
 import com.naukma.springproject.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,16 +19,16 @@ public class StudentServiceImpl implements StudentService{
         this.studentRepository = studentRepository;
     }
 
-    public void register(StudentEntity studentEntity){
-        studentRepository.save(studentEntity);
+    public void register(Student student){
+        studentRepository.save(StudentEntity.toEntity(student));
     }
 
     @Override
-    public StudentEntity get(Long studentId) {
+    public Student get(Long studentId) {
         if(studentRepository.findById(studentId).isEmpty())
             throw new NoSuchElementException("Student not found.");
 
-        return studentRepository.findById(studentId).get();
+        return Student.toModel(studentRepository.findById(studentId).get());
     }
 
     @Override

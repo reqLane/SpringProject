@@ -1,14 +1,16 @@
 package com.naukma.springproject.controller;
 
-import com.naukma.springproject.entity.ProjectEntity;
 import com.naukma.springproject.exception.StudentAlreadyEnrolledException;
 import com.naukma.springproject.exception.StudentIsNotEnrolledException;
+import com.naukma.springproject.model.Project;
 import com.naukma.springproject.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -23,10 +25,10 @@ public class ProjectController {
     }
 
     @PostMapping("/addTo/{organizationId}")
-    public ResponseEntity addToOrganization(@RequestBody ProjectEntity projectEntity,
+    public ResponseEntity addToOrganization(@Valid @RequestBody Project project,
                                             @PathVariable Long organizationId){
         try{
-            projectService.addTo(projectEntity,organizationId);
+            projectService.addTo(project,organizationId);
             return ResponseEntity.ok("Project created");
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Error 404");
@@ -53,7 +55,7 @@ public class ProjectController {
         }
     }
 
-    @PutMapping("/{projectId}/members/{studentId}/setHours")
+    @PatchMapping("/{projectId}/members/{studentId}/setHours")
     public ResponseEntity setHoursForMember(@PathVariable Long projectId,
                                             @PathVariable Long studentId,
                                             @RequestParam Long hoursAmount) {
@@ -87,6 +89,11 @@ public class ProjectController {
     }
     @ExceptionHandler(StudentIsNotEnrolledException.class)
     public String handleException(StudentIsNotEnrolledException e) {
+        //logging error
+        return e.getMessage();
+    }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public String handleException(MethodArgumentNotValidException e) {
         //logging error
         return e.getMessage();
     }

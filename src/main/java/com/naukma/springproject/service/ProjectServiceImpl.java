@@ -5,6 +5,7 @@ import com.naukma.springproject.entity.key.StudentOrganizationKey;
 import com.naukma.springproject.entity.key.StudentProjectKey;
 import com.naukma.springproject.exception.StudentAlreadyEnrolledException;
 import com.naukma.springproject.exception.StudentIsNotEnrolledException;
+import com.naukma.springproject.model.Project;
 import com.naukma.springproject.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,10 +35,12 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void addTo(ProjectEntity projectEntity, Long organizationId) {
+    public void addTo(Project project, Long organizationId) {
         if(organizationRepository.findById(organizationId).isEmpty())
             throw new NoSuchElementException("Organization not found");
         OrganizationEntity organization = organizationRepository.findById(organizationId).get();
+
+        ProjectEntity projectEntity = ProjectEntity.toEntity(project);
 
         projectEntity.setOrganization(organization);
         projectRepository.save(projectEntity);
@@ -68,11 +71,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public ProjectEntity get(Long projectId) {
+    public Project get(Long projectId) {
         if(projectRepository.findById(projectId).isEmpty())
             throw new NoSuchElementException("Project not found.");
 
-        return projectRepository.findById(projectId).get();
+        return Project.toModel(projectRepository.findById(projectId).get());
     }
 
     @Override

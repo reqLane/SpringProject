@@ -1,13 +1,13 @@
 package com.naukma.springproject.service;
 
-import com.naukma.springproject.entity.OrganizationEntity;
 import com.naukma.springproject.exception.StudentAlreadyEnrolledException;
+import com.naukma.springproject.model.Organization;
 
 public interface OrganizationService {
 
-    void register(OrganizationEntity organizationEntity);
+    void register(Organization organization);
 
-    OrganizationEntity get(Long organizationId);
+    Organization get(Long organizationId);
 
     void addStudent(Long organizationId, Long studentId) throws StudentAlreadyEnrolledException;
 

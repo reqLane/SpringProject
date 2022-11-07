@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.NoSuchElementException;
 
@@ -18,6 +19,19 @@ public class AdminController {
     @Autowired
     public AdminController(AdminService adminService) {
         this.adminService = adminService;
+    }
+
+    @RequestMapping("/delete-organization/{organizationId}")
+    public ResponseEntity deleteOrganization(@PathVariable Long organizationId) {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:8080/organization/delete/" + organizationId;
+
+        try {
+            restTemplate.delete(url);
+            return ResponseEntity.ok("Organization deleted");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error 404");
+        }
     }
 
     @PostMapping("/register")

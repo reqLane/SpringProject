@@ -5,11 +5,10 @@ import com.naukma.springproject.entity.StudentEntity;
 import com.naukma.springproject.entity.StudentOrganization;
 import com.naukma.springproject.entity.key.StudentOrganizationKey;
 import com.naukma.springproject.exception.StudentAlreadyEnrolledException;
+import com.naukma.springproject.model.Organization;
 import com.naukma.springproject.repository.OrganizationRepository;
 import com.naukma.springproject.repository.StudentOrganizationRepository;
 import com.naukma.springproject.repository.StudentRepository;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +21,6 @@ public class OrganizationServiceImpl implements OrganizationService {
     private final StudentRepository studentRepository;
     private final StudentOrganizationRepository studentOrganizationRepository;
 
-    private final Logger logger = LogManager.getLogger();
-
     @Autowired
     public OrganizationServiceImpl(OrganizationRepository organizationRepository,
                                    StudentRepository studentRepository,
@@ -34,16 +31,16 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public void register(OrganizationEntity organizationEntity) {
-        organizationRepository.save(organizationEntity);
+    public void register(Organization organization) {
+        organizationRepository.save(OrganizationEntity.toEntity(organization));
     }
 
     @Override
-    public OrganizationEntity get(Long organizationId) {
+    public Organization get(Long organizationId) {
         if(organizationRepository.findById(organizationId).isEmpty())
             throw new NoSuchElementException("Organization not found.");
 
-        return organizationRepository.findById(organizationId).get();
+        return Organization.toModel(organizationRepository.findById(organizationId).get());
     }
 
     @Override
