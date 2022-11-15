@@ -19,7 +19,7 @@ public class Student {
         model.setLogin(studentEntity.getLogin());
         model.setPassword(studentEntity.getPassword());
         model.setName(studentEntity.getName());
-        model.setSurname(model.getSurname());
+        model.setSurname(studentEntity.getSurname());
         return model;
     }
 

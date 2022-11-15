@@ -3,6 +3,8 @@ package com.naukma.springproject.controller;
 import com.naukma.springproject.exception.StudentAlreadyEnrolledException;
 import com.naukma.springproject.model.Organization;
 import com.naukma.springproject.service.OrganizationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/organization")
 @ConditionalOnBean(OrganizationService.class)
+@Tag(name = "Organization Controller", description = "Controller for student organizations")
 public class OrganizationController {
     private final OrganizationService organizationService;
 
@@ -24,6 +27,7 @@ public class OrganizationController {
     }
 
     @PostMapping("/register")
+    @Operation(summary = "registering organization operation")
     public ResponseEntity registerOrganization(@Valid @RequestBody Organization organization){
         try{
             organizationService.register(organization);
@@ -34,6 +38,7 @@ public class OrganizationController {
     }
 
     @PostMapping("/{organizationId}/addStudent/{studentId}")
+    @Operation(summary = "adding student to organization operation")
     public ResponseEntity addStudent(@PathVariable Long organizationId,
                                      @PathVariable Long studentId) {
         try{
@@ -45,6 +50,7 @@ public class OrganizationController {
     }
 
     @GetMapping("/get/{organizationId}")
+    @Operation(summary = "getting organization by ID operation")
     public ResponseEntity getOrganization(@PathVariable Long organizationId) {
         try {
             return ResponseEntity.ok(organizationService.get(organizationId));
@@ -54,6 +60,7 @@ public class OrganizationController {
     }
 
     @DeleteMapping("/delete/{organizationId}")
+    @Operation(summary = "deleting organization by ID operation")
     public ResponseEntity deleteOrganization(@PathVariable Long organizationId){
         try{
             organizationService.delete(organizationId);

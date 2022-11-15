@@ -2,6 +2,8 @@ package com.naukma.springproject.controller;
 
 import com.naukma.springproject.model.Student;
 import com.naukma.springproject.service.StudentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/student")
 @ConditionalOnBean(StudentService.class)
+@Tag(name = "Student Controller", description = "Controller for students")
 public class StudentController {
 
     private final StudentService studentService;
@@ -24,6 +27,7 @@ public class StudentController {
 
 
     @PostMapping("/register")
+    @Operation(summary = "registering student operation")
     public ResponseEntity registerStudent(@Valid @RequestBody Student student){
         try{
             studentService.register(student);
@@ -34,6 +38,7 @@ public class StudentController {
     }
 
     @GetMapping("/get/{studentId}")
+    @Operation(summary = "getting student by ID operation")
     public ResponseEntity getStudent(@PathVariable Long studentId) {
         try {
             return ResponseEntity.ok(studentService.get(studentId));
@@ -43,6 +48,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/delete/{studentId}")
+    @Operation(summary = "deleting student operation")
     public ResponseEntity deleteStudent(@PathVariable Long studentId){
         try{
             studentService.delete(studentId);
