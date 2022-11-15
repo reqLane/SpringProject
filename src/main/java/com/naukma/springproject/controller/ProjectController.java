@@ -4,6 +4,9 @@ import com.naukma.springproject.exception.StudentAlreadyEnrolledException;
 import com.naukma.springproject.exception.StudentIsNotEnrolledException;
 import com.naukma.springproject.model.Project;
 import com.naukma.springproject.service.ProjectService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,9 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/project")
 @ConditionalOnBean(ProjectService.class)
+@Api(value = "", tags  = "Project Controller")
+@Tag(name = "Project Controller", description = "Controller for projects of organization")
+
 public class ProjectController {
     private final ProjectService projectService;
 
@@ -25,6 +31,7 @@ public class ProjectController {
     }
 
     @PostMapping("/addTo/{organizationId}")
+    @ApiOperation("adding project to organization by id operation")
     public ResponseEntity addToOrganization(@Valid @RequestBody Project project,
                                             @PathVariable Long organizationId){
         try{
@@ -36,6 +43,7 @@ public class ProjectController {
     }
 
     @PostMapping("/{projectId}/addStudent/{studentId}")
+    @ApiOperation("adding student to project operation")
     public ResponseEntity addStudent(@PathVariable Long projectId,
                                      @PathVariable Long studentId) {
         try{
@@ -47,6 +55,7 @@ public class ProjectController {
     }
 
     @GetMapping("/get/{projectId}")
+    @ApiOperation("getting project by id operation")
     public ResponseEntity getProject(@PathVariable Long projectId) {
         try {
             return ResponseEntity.ok(projectService.get(projectId));
@@ -56,6 +65,7 @@ public class ProjectController {
     }
 
     @PatchMapping("/{projectId}/members/{studentId}/setHours")
+    @ApiOperation("setting work hours to student operation")
     public ResponseEntity setHoursForMember(@PathVariable Long projectId,
                                             @PathVariable Long studentId,
                                             @RequestParam Long hoursAmount) {
@@ -68,6 +78,7 @@ public class ProjectController {
     }
 
     @DeleteMapping("/delete/{studentProjectId}")
+    @ApiOperation("deleting project from organization operation")
     public ResponseEntity deleteFromOrganization(@PathVariable Long studentProjectId){
         try{
             projectService.delete(studentProjectId);

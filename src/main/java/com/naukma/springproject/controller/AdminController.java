@@ -2,6 +2,9 @@ package com.naukma.springproject.controller;
 
 import com.naukma.springproject.entity.AdminEntity;
 import com.naukma.springproject.service.AdminService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +16,8 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/admin")
 @ConditionalOnBean(AdminService.class)
+@Api(value = "", tags  = "Admin Controller")
+@Tag(name = "Admin Controller", description = "Controller for admins of site")
 public class AdminController {
     private final AdminService adminService;
 
@@ -21,7 +26,8 @@ public class AdminController {
         this.adminService = adminService;
     }
 
-    @RequestMapping("/delete-organization/{organizationId}")
+    @DeleteMapping("/delete-organization/{organizationId}")
+    @ApiOperation("deleting organization operation")
     public ResponseEntity deleteOrganization(@PathVariable Long organizationId) {
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:8080/organization/delete/" + organizationId;
@@ -35,6 +41,7 @@ public class AdminController {
     }
 
     @PostMapping("/register")
+    @ApiOperation("registering of new admin")
     public ResponseEntity registerAdmin(@RequestBody AdminEntity adminEntity){
         try{
             adminService.register(adminEntity);
@@ -46,6 +53,7 @@ public class AdminController {
     }
 
     @GetMapping("/get/{adminId}")
+    @ApiOperation("getting admin by id operation")
     public ResponseEntity getAdmin(@PathVariable Long adminId){
         try{
             return ResponseEntity.ok(adminService.get(adminId));
@@ -55,6 +63,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/delete/{adminId}")
+    @ApiOperation("deleting admin by id operation")
     public ResponseEntity deleteAdmin(@PathVariable Long adminId){
         try{
             adminService.delete(adminId);
