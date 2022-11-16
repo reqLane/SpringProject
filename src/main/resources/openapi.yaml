@@ -1,0 +1,410 @@
+openapi: 3.0.1
+info:
+  title: StudentOrganizations - OpenAPI 3.0
+  version: 1.0.11
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+tags:
+  - name: Student Controller
+    description: Controller for students
+  - name: Project Controller
+    description: Controller for projects of organizations
+  - name: Organization Controller
+    description: Controller for student organizations
+  - name: Admin Controller
+    description: Controller for admins of site
+paths:
+  /student/register:
+    post:
+      tags:
+        - Student Controller
+      summary: registering student operation
+      operationId: registerStudent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /project/{projectId}/addStudent/{studentId}:
+    post:
+      tags:
+        - Project Controller
+      summary: adding student to project operation
+      operationId: addStudent
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /project/addTo/{organizationId}:
+    post:
+      tags:
+        - Project Controller
+      summary: adding project to organization operation
+      operationId: addToOrganization
+      parameters:
+        - name: organizationId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /organization/{organizationId}/addStudent/{studentId}:
+    post:
+      tags:
+        - Organization Controller
+      summary: adding student to organization operation
+      operationId: addStudent_1
+      parameters:
+        - name: organizationId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /organization/register:
+    post:
+      tags:
+        - Organization Controller
+      summary: registering organization operation
+      operationId: registerOrganization
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /admin/register:
+    post:
+      tags:
+        - Admin Controller
+      summary: registering admin of site operation
+      operationId: registerAdmin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminEntity'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /project/{projectId}/members/{studentId}/setHours:
+    patch:
+      tags:
+        - Project Controller
+      summary: setting work hours to student
+      operationId: setHoursForMember
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: hoursAmount
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /student/get/{studentId}:
+    get:
+      tags:
+        - Student Controller
+      summary: getting student by ID operation
+      operationId: getStudent
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /project/get/{projectId}:
+    get:
+      tags:
+        - Project Controller
+      summary: getting project by ID operation
+      operationId: getProject
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /organization/get/{organizationId}:
+    get:
+      tags:
+        - Organization Controller
+      summary: getting organization by ID operation
+      operationId: getOrganization
+      parameters:
+        - name: organizationId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /admin/get/{adminId}:
+    get:
+      tags:
+        - Admin Controller
+      summary: getting admin by ID operation
+      operationId: getAdmin
+      parameters:
+        - name: adminId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /student/delete/{studentId}:
+    delete:
+      tags:
+        - Student Controller
+      summary: deleting student operation
+      operationId: deleteStudent
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /project/delete/{studentProjectId}:
+    delete:
+      tags:
+        - Project Controller
+      summary: delete project from organization operation
+      operationId: deleteFromOrganization
+      parameters:
+        - name: studentProjectId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /organization/delete/{organizationId}:
+    delete:
+      tags:
+        - Organization Controller
+      summary: deleting organization by ID operation
+      operationId: deleteOrganization
+      parameters:
+        - name: organizationId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /admin/delete/{adminId}:
+    delete:
+      tags:
+        - Admin Controller
+      summary: deleting admin by ID operation
+      operationId: deleteAdmin
+      parameters:
+        - name: adminId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /admin/delete-organization/{organizationId}:
+    delete:
+      tags:
+        - Admin Controller
+      summary: deleting organization by ID operation
+      operationId: deleteOrganization_1
+      parameters:
+        - name: organizationId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+components:
+  schemas:
+    Student:
+      required:
+        - login
+        - name
+        - password
+        - surname
+      type: object
+      properties:
+        login:
+          type: string
+        password:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+    Project:
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+    Organization:
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+    AdminEntity:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        login:
+          type: string
+        password:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
