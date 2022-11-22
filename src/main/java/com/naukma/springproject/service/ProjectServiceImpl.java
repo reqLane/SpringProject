@@ -17,14 +17,14 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
     private final OrganizationRepository organizationRepository;
-    private final StudentRepository studentRepository;
+    private final UserRepository studentRepository;
     private final StudentProjectRepository studentProjectRepository;
     private final StudentOrganizationRepository studentOrganizationRepository;
 
     @Autowired
     public ProjectServiceImpl(ProjectRepository projectRepository,
                               OrganizationRepository organizationRepository,
-                              StudentRepository studentRepository,
+                              UserRepository studentRepository,
                               StudentProjectRepository studentProjectRepository,
                               StudentOrganizationRepository studentOrganizationRepository) {
         this.projectRepository = projectRepository;
@@ -53,7 +53,7 @@ public class ProjectServiceImpl implements ProjectService {
         ProjectEntity project = projectRepository.findById(projectId).get();
         if(studentRepository.findById(studentId).isEmpty())
             throw new NoSuchElementException("Student not found");
-        StudentEntity student = studentRepository.findById(studentId).get();
+        UserEntity student = studentRepository.findById(studentId).get();
 
         //check if student belongs to project's organization
         ProjectEntity projectEntity = projectRepository.findById(projectId).get();

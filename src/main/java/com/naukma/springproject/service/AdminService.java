@@ -1,12 +1,14 @@
 package com.naukma.springproject.service;
 
-import com.naukma.springproject.entity.AdminEntity;
+
+import com.naukma.springproject.entity.UserEntity;
+import com.naukma.springproject.model.User;
 
 public interface AdminService {
 
-    void register(AdminEntity adminEntity);
+    void register(User admin);
 
-    AdminEntity get(Long adminId);
+    UserEntity get(Long adminId);
 
     void delete(Long adminId);
 }

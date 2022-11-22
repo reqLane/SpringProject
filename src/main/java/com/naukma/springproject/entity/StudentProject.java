@@ -14,7 +14,7 @@ public class StudentProject {
     @ManyToOne
     @MapsId("studentId")
     @JoinColumn(name = "student_id")
-    StudentEntity student;
+    UserEntity student;
 
     @ManyToOne
     @MapsId("projectId")
@@ -32,11 +32,11 @@ public class StudentProject {
         this.id = id;
     }
 
-    public StudentEntity getStudent() {
+    public UserEntity getStudent() {
         return student;
     }
 
-    public void setStudent(StudentEntity student) {
+    public void setStudent(UserEntity student) {
         this.student = student;
     }
 

@@ -1,14 +1,14 @@
 package com.naukma.springproject.service;
 
 import com.naukma.springproject.entity.OrganizationEntity;
-import com.naukma.springproject.entity.StudentEntity;
 import com.naukma.springproject.entity.StudentOrganization;
+import com.naukma.springproject.entity.UserEntity;
 import com.naukma.springproject.entity.key.StudentOrganizationKey;
 import com.naukma.springproject.exception.StudentAlreadyEnrolledException;
 import com.naukma.springproject.model.Organization;
 import com.naukma.springproject.repository.OrganizationRepository;
 import com.naukma.springproject.repository.StudentOrganizationRepository;
-import com.naukma.springproject.repository.StudentRepository;
+import com.naukma.springproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +18,12 @@ import java.util.NoSuchElementException;
 public class OrganizationServiceImpl implements OrganizationService {
 
     private final OrganizationRepository organizationRepository;
-    private final StudentRepository studentRepository;
+    private final UserRepository studentRepository;
     private final StudentOrganizationRepository studentOrganizationRepository;
 
     @Autowired
     public OrganizationServiceImpl(OrganizationRepository organizationRepository,
-                                   StudentRepository studentRepository,
+                                   UserRepository studentRepository,
                                    StudentOrganizationRepository studentOrganizationRepository) {
         this.organizationRepository = organizationRepository;
         this.studentRepository = studentRepository;
@@ -50,7 +50,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         OrganizationEntity organization = organizationRepository.findById(organizationId).get();
         if(studentRepository.findById(studentId).isEmpty())
             throw new NoSuchElementException("Student not found.");
-        StudentEntity student = studentRepository.findById(studentId).get();
+        UserEntity student = studentRepository.findById(studentId).get();
 
         //already enrolled
         StudentOrganizationKey embeddedId = new StudentOrganizationKey();

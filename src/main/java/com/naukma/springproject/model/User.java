@@ -1,10 +1,10 @@
 package com.naukma.springproject.model;
 
-import com.naukma.springproject.entity.StudentEntity;
+import com.naukma.springproject.entity.UserEntity;
 
 import javax.validation.constraints.NotBlank;
 
-public class Student {
+public class User {
     @NotBlank(message = "login is mandatory")
     private String login;
     @NotBlank(message = "password is mandatory")
@@ -14,12 +14,23 @@ public class Student {
     @NotBlank(message = "surname is mandatory")
     private String surname;
 
-    public static Student toModel(StudentEntity studentEntity) {
-        Student model = new Student();
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public static User toModel(UserEntity studentEntity) {
+        User model = new User();
         model.setLogin(studentEntity.getLogin());
         model.setPassword(studentEntity.getPassword());
         model.setName(studentEntity.getName());
         model.setSurname(studentEntity.getSurname());
+        model.setEmail(studentEntity.getEmail());
         return model;
     }
 

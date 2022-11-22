@@ -1,6 +1,6 @@
 package com.naukma.springproject.controller;
 
-import com.naukma.springproject.model.Student;
+import com.naukma.springproject.model.User;
 import com.naukma.springproject.service.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,7 +28,7 @@ public class StudentController {
 
     @PostMapping("/register")
     @Operation(summary = "registering student operation")
-    public ResponseEntity registerStudent(@Valid @RequestBody Student student){
+    public ResponseEntity registerStudent(@Valid @RequestBody User student){
         try{
             studentService.register(student);
             return ResponseEntity.ok("Student created");
@@ -42,6 +42,16 @@ public class StudentController {
     public ResponseEntity getStudent(@PathVariable Long studentId) {
         try {
             return ResponseEntity.ok(studentService.get(studentId));
+        } catch(Exception e) {
+            return ResponseEntity.badRequest().body("Error 404");
+        }
+    }
+
+    @GetMapping("/get/by_login/{userName}")
+    @Operation(summary = "getting user by login")
+    public ResponseEntity getUserByName(@PathVariable String userName){
+        try {
+            return ResponseEntity.ok(studentService.getUserByLogin(userName));
         } catch(Exception e) {
             return ResponseEntity.badRequest().body("Error 404");
         }

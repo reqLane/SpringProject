@@ -1,6 +1,7 @@
 package com.naukma.springproject.controller;
 
-import com.naukma.springproject.entity.AdminEntity;
+import com.naukma.springproject.entity.UserEntity;
+import com.naukma.springproject.model.User;
 import com.naukma.springproject.service.AdminService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,9 +41,9 @@ public class AdminController {
 
     @PostMapping("/register")
     @Operation(summary = "registering admin of site operation")
-    public ResponseEntity registerAdmin(@RequestBody AdminEntity adminEntity){
+    public ResponseEntity registerAdmin(@RequestBody User admin){
         try{
-            adminService.register(adminEntity);
+            adminService.register(admin);
             return ResponseEntity.ok("Admin created");
         }catch (Exception e){
             e.printStackTrace();
