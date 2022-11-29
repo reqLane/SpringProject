@@ -9,11 +9,11 @@
     <label for="username">Username:</label>
     <input th:field="*{login}" type="text" id="username" name="username" autofocus="autofocus" required> <br>
     <label for="password">Password</label>:
-    <input th:field="${password}" type="password" id="password" name="password" required> <br>
+    <input th:field="*{password}" type="password" id="password" name="password" required> <br>
     <label for="name">Name</label>:
     <input th:field="*{name}" type="text" id="name" name="name" required> <br>
     <label for="surname">Surname</label>:
-    <input th:field="${surname}" type="text" id="surname" name="surname" required> <br>
+    <input th:field="*{surname}" type="text" id="surname" name="surname" required> <br>
     <input type="submit" value="Log in">
 </form>
 </body>

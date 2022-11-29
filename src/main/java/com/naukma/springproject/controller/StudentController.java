@@ -26,9 +26,20 @@ public class StudentController {
     }
 
 
+//    @PostMapping("/register")
+//    @Operation(summary = "registering student operation")
+//    public ResponseEntity registerStudent(@Valid @RequestBody User student){
+//        try{
+//            studentService.register(student);
+//            return ResponseEntity.ok("Student created");
+//        }catch (Exception e){
+//            return ResponseEntity.badRequest().body("Error 404");
+//        }
+//    }
+
     @PostMapping("/register")
     @Operation(summary = "registering student operation")
-    public ResponseEntity registerStudent(@Valid @RequestBody User student){
+    public ResponseEntity registerStudent(@ModelAttribute("user") User student){
         try{
             studentService.register(student);
             return ResponseEntity.ok("Student created");
