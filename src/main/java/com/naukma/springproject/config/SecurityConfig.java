@@ -33,16 +33,19 @@ public class SecurityConfig {
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/student/register/**").permitAll()
                 .antMatchers("/student/**").hasAnyAuthority("STUDENT","ADMIN")
+                .antMatchers("/organization/register", "/organization/addStudent").hasAuthority("ADMIN")
                 .antMatchers("/organization/**").hasAnyAuthority("STUDENT","ADMIN")
-                .antMatchers("/project/**").hasAnyAuthority("ADMIN", "STUDENT")
+                .antMatchers("/project/addTo", "/project/addStudent").hasAuthority("ADMIN")
+                .antMatchers("/project/**").hasAnyAuthority("STUDENT", "ADMIN")
+                .antMatchers("/home", "/profile").authenticated()
                 .antMatchers("/**").permitAll()
                 .and()
                 .formLogin()
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/homepage")
+                .defaultSuccessUrl("/home")
                 .and()
                 .logout()
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/login");
 
         return http.build();
     }

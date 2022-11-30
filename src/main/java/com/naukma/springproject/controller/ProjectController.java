@@ -2,6 +2,7 @@ package com.naukma.springproject.controller;
 
 import com.naukma.springproject.exception.StudentAlreadyEnrolledException;
 import com.naukma.springproject.exception.StudentIsNotEnrolledException;
+import com.naukma.springproject.model.Pair;
 import com.naukma.springproject.model.Project;
 import com.naukma.springproject.service.ProjectService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,24 +28,24 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @PostMapping("/addTo/{organizationId}")
+    @PostMapping("/addTo")
     @Operation(summary = "adding project to organization operation")
-    public ResponseEntity addToOrganization(@Valid @RequestBody Project project,
-                                            @PathVariable Long organizationId){
+    public ResponseEntity addToOrganization(@ModelAttribute("projectToOrgPair") Pair<String, String> projectToOrgPair){
         try{
-            projectService.addTo(project,organizationId);
+            Project project = new Project();
+            project.setName(projectToOrgPair.getFirst());
+            projectService.addTo(project, Long.parseLong(projectToOrgPair.getSecond()));
             return ResponseEntity.ok("Project created");
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Error 404");
         }
     }
 
-    @PostMapping("/{projectId}/addStudent/{studentId}")
+    @PostMapping("/addStudent")
     @Operation(summary = "adding student to project operation")
-    public ResponseEntity addStudent(@PathVariable Long projectId,
-                                     @PathVariable Long studentId) {
+    public ResponseEntity addStudent(@ModelAttribute("studentToProjPair") Pair<String, String> studentToProjPair) {
         try{
-            projectService.addStudent(projectId, studentId);
+            projectService.addStudent(Long.parseLong(studentToProjPair.getFirst()), studentToProjPair.getSecond());
             return ResponseEntity.ok("Student added to project");
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Error 404");

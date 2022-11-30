@@ -13,7 +13,7 @@ public class User {
     private String name;
     @NotBlank(message = "surname is mandatory")
     private String surname;
-
+    @NotBlank(message = "email is mandatory")
     private String email;
 
     public String getEmail() {

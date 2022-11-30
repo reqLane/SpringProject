@@ -1,18 +1,19 @@
 package com.naukma.springproject.service;
 
-import com.naukma.springproject.entity.OrganizationEntity;
-import com.naukma.springproject.entity.StudentOrganization;
-import com.naukma.springproject.entity.UserEntity;
+import com.naukma.springproject.entity.*;
 import com.naukma.springproject.entity.key.StudentOrganizationKey;
 import com.naukma.springproject.exception.StudentAlreadyEnrolledException;
 import com.naukma.springproject.model.Organization;
+import com.naukma.springproject.model.Pair;
 import com.naukma.springproject.repository.OrganizationRepository;
 import com.naukma.springproject.repository.StudentOrganizationRepository;
 import com.naukma.springproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
@@ -44,18 +45,18 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public void addStudent(Long organizationId, Long studentId) throws StudentAlreadyEnrolledException {
+    public void addStudent(Long organizationId, String studentLogin) throws StudentAlreadyEnrolledException {
         if(organizationRepository.findById(organizationId).isEmpty())
             throw new NoSuchElementException("Organization not found.");
         OrganizationEntity organization = organizationRepository.findById(organizationId).get();
-        if(studentRepository.findById(studentId).isEmpty())
+        if(studentRepository.findByLogin(studentLogin) == null)
             throw new NoSuchElementException("Student not found.");
-        UserEntity student = studentRepository.findById(studentId).get();
+        UserEntity student = studentRepository.findByLogin(studentLogin);
 
         //already enrolled
         StudentOrganizationKey embeddedId = new StudentOrganizationKey();
         embeddedId.setOrganizationId(organizationId);
-        embeddedId.setStudentId(studentId);
+        embeddedId.setStudentId(student.getId());
         if(studentOrganizationRepository.findById(embeddedId).isPresent())
             throw new StudentAlreadyEnrolledException("Student already enrolled in the organization");
 
@@ -63,6 +64,21 @@ public class OrganizationServiceImpl implements OrganizationService {
         connection.setOrganization(organization);
         connection.setStudent(student);
         studentOrganizationRepository.save(connection);
+    }
+
+    public Set<Pair<ProjectEntity, Long>> getProjectsWithStudent(OrganizationEntity org, UserEntity user) {
+        Set<Pair<ProjectEntity, Long>> projects = new HashSet<>();
+
+        for (ProjectEntity project : org.getProjects()) {
+            for (StudentProject connection : project.getStudentProjects()) {
+                if(connection.getStudent().equals(user)) {
+                    projects.add(new Pair<>(project, connection.getHours()));
+                    break;
+                }
+            }
+        }
+
+        return projects;
     }
 
     @Override

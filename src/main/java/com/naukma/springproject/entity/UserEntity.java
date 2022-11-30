@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class UserEntity {
 
     public UserEntity(String login, String password, String name, String surname, Role role, String email){
@@ -35,15 +34,41 @@ public class UserEntity {
 
     private String email;
 
-    public String getEmail() {
-        return email;
+
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "student",
+            cascade = CascadeType.ALL)
+    Set<StudentOrganization> studentOrganizations;
+    @OneToMany(fetch = FetchType.LAZY,
+            mappedBy = "student",
+            cascade = CascadeType.ALL)
+    Set<StudentProject> studentProjects;
+
+    public static UserEntity toEntity(User model) {
+        UserEntity entity = new UserEntity();
+        entity.setLogin(model.getLogin());
+        entity.setPassword(model.getPassword());
+        entity.setName(model.getName());
+        entity.setSurname(model.getSurname());
+        entity.setEmail(model.getEmail());
+        return entity;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public Set<StudentOrganization> getStudentOrganizations() {
+        return studentOrganizations;
     }
 
+    public void setStudentOrganizations(Set<StudentOrganization> studentOrganizations) {
+        this.studentOrganizations = studentOrganizations;
+    }
 
+    public Set<StudentProject> getStudentProjects() {
+        return studentProjects;
+    }
+
+    public void setStudentProjects(Set<StudentProject> studentProjects) {
+        this.studentProjects = studentProjects;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -93,41 +118,11 @@ public class UserEntity {
         this.role = role;
     }
 
-
-    @OneToMany(fetch = FetchType.LAZY,
-            mappedBy = "student",
-            cascade = CascadeType.ALL)
-    Set<StudentOrganization> studentOrganizations;
-
-    @OneToMany(fetch = FetchType.LAZY,
-            mappedBy = "student",
-            cascade = CascadeType.ALL)
-    Set<StudentProject> studentProjects;
-
-    public static UserEntity toEntity(User model) {
-        UserEntity entity = new UserEntity();
-        entity.setLogin(model.getLogin());
-        entity.setPassword(model.getPassword());
-        entity.setName(model.getName());
-        entity.setSurname(model.getSurname());
-        entity.setEmail(model.getEmail());
-        return entity;
+    public String getEmail() {
+        return email;
     }
 
-    public Set<StudentOrganization> getStudentOrganizations() {
-        return studentOrganizations;
+    public void setEmail(String email) {
+        this.email = email;
     }
-
-    public void setStudentOrganizations(Set<StudentOrganization> studentOrganizations) {
-        this.studentOrganizations = studentOrganizations;
-    }
-
-    public Set<StudentProject> getStudentProjects() {
-        return studentProjects;
-    }
-
-    public void setStudentProjects(Set<StudentProject> studentProjects) {
-        this.studentProjects = studentProjects;
-    }
-
 }

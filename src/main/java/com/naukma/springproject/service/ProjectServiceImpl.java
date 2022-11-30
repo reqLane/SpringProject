@@ -47,21 +47,21 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void addStudent(Long projectId, Long studentId) throws StudentAlreadyEnrolledException, StudentIsNotEnrolledException {
+    public void addStudent(Long projectId, String studentLogin) throws StudentAlreadyEnrolledException, StudentIsNotEnrolledException {
         if(projectRepository.findById(projectId).isEmpty())
             throw new NoSuchElementException("Project not found");
         ProjectEntity project = projectRepository.findById(projectId).get();
-        if(studentRepository.findById(studentId).isEmpty())
-            throw new NoSuchElementException("Student not found");
-        UserEntity student = studentRepository.findById(studentId).get();
+        if(studentRepository.findByLogin(studentLogin) == null)
+            throw new NoSuchElementException("Student not found.");
+        UserEntity student = studentRepository.findByLogin(studentLogin);
 
         //check if student belongs to project's organization
         ProjectEntity projectEntity = projectRepository.findById(projectId).get();
-        if(!studentBelongsToOrganization(studentId, projectEntity.getOrganization().getId()))
+        if(!studentBelongsToOrganization(student.getId(), projectEntity.getOrganization().getId()))
             throw new StudentIsNotEnrolledException("Student is not enrolled in the project's organization");
 
         //already enrolled
-        if(studentBelongsToProject(projectId, studentId))
+        if(studentBelongsToProject(projectId, student.getId()))
             throw new StudentAlreadyEnrolledException("Student already enrolled in the project");
 
         StudentProject connection = new StudentProject();

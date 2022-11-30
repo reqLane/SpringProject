@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class StudentProject {
 
     @EmbeddedId
-    StudentProjectKey id;
+    StudentProjectKey id = new StudentProjectKey();
 
     @ManyToOne
     @MapsId("studentId")
@@ -49,6 +49,7 @@ public class StudentProject {
     }
 
     public Long getHours() {
+        if(hours == null) return 0L;
         return hours;
     }
 

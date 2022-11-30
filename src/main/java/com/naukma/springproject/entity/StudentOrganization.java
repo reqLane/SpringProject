@@ -1,7 +1,6 @@
 package com.naukma.springproject.entity;
 
 import com.naukma.springproject.entity.key.StudentOrganizationKey;
-import com.naukma.springproject.enums.StudentRoles;
 
 import javax.persistence.*;
 
@@ -10,7 +9,7 @@ import javax.persistence.*;
 public class StudentOrganization {
 
     @EmbeddedId
-    StudentOrganizationKey id;
+    StudentOrganizationKey id = new StudentOrganizationKey();
 
     @ManyToOne
     @MapsId("studentId")
@@ -21,9 +20,6 @@ public class StudentOrganization {
     @MapsId("organizationId")
     @JoinColumn(name = "organization_id")
     OrganizationEntity organization;
-
-    @Enumerated(EnumType.STRING)
-    StudentRoles studentRole;
 
 
     public StudentOrganizationKey getId() {
@@ -48,13 +44,5 @@ public class StudentOrganization {
 
     public void setOrganization(OrganizationEntity organization) {
         this.organization = organization;
-    }
-
-    public StudentRoles getStudentRole() {
-        return studentRole;
-    }
-
-    public void setStudentRole(StudentRoles studentRole) {
-        this.studentRole = studentRole;
     }
 }

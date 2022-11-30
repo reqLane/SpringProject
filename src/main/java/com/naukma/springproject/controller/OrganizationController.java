@@ -2,6 +2,7 @@ package com.naukma.springproject.controller;
 
 import com.naukma.springproject.exception.StudentAlreadyEnrolledException;
 import com.naukma.springproject.model.Organization;
+import com.naukma.springproject.model.Pair;
 import com.naukma.springproject.service.OrganizationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,7 +29,7 @@ public class OrganizationController {
 
     @PostMapping("/register")
     @Operation(summary = "registering organization operation")
-    public ResponseEntity registerOrganization(@Valid @RequestBody Organization organization){
+    public ResponseEntity registerOrganization(@ModelAttribute("orgToCreate") Organization organization){
         try{
             organizationService.register(organization);
             return ResponseEntity.ok("Organization created");
@@ -37,12 +38,11 @@ public class OrganizationController {
         }
     }
 
-    @PostMapping("/{organizationId}/addStudent/{studentId}")
+    @PostMapping("/addStudent")
     @Operation(summary = "adding student to organization operation")
-    public ResponseEntity addStudent(@PathVariable Long organizationId,
-                                     @PathVariable Long studentId) {
+    public ResponseEntity addStudent(@ModelAttribute("studentToOrgPair") Pair<String, String> studentOrgPair) {
         try{
-            organizationService.addStudent(organizationId, studentId);
+            organizationService.addStudent(Long.parseLong(studentOrgPair.getFirst()), studentOrgPair.getSecond());
             return ResponseEntity.ok("Student added to organization");
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Error 404");

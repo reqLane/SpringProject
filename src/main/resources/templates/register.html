@@ -2,19 +2,36 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Registration page</title>
+    <link th:href="@{/css/register.css}" rel="stylesheet"/>
 </head>
 <body>
 <h1>Registration page</h1>
-<form th:action="@{/student/register}" th:object="${user}" method="post">
-    <label for="username">Username:</label>
-    <input th:field="*{login}" type="text" id="username" name="username" autofocus="autofocus" required> <br>
-    <label for="password">Password</label>:
-    <input th:field="*{password}" type="password" id="password" name="password" required> <br>
-    <label for="name">Name</label>:
-    <input th:field="*{name}" type="text" id="name" name="name" required> <br>
-    <label for="surname">Surname</label>:
-    <input th:field="*{surname}" type="text" id="surname" name="surname" required> <br>
-    <input type="submit" value="Log in">
-</form>
+<div class="form_wrapper">
+    <form class="register_form" th:action="@{/student/register}" th:object="${user}" method="post">
+        <div class="form_section">
+            <label for="login">Username:</label>
+            <input th:field="*{login}" type="text" id="login" name="login" autofocus="autofocus" required>
+        </div>
+        <div class="form_section">
+            <label for="password">Password:</label>
+            <input th:field="*{password}" type="password" id="password" name="password" required>
+        </div>
+        <div class="form_section">
+            <label for="name">Name:</label>
+            <input th:field="*{name}" type="text" id="name" name="name" required>
+        </div>
+        <div class="form_section">
+            <label for="surname">Surname:</label>
+            <input th:field="*{surname}" type="text" id="surname" name="surname" required>
+        </div>
+        <div class="form_section">
+            <label for="email">Email:</label>
+            <input th:field="*{email}" type="email" id="email" name="email" required>
+        </div>
+        <div class="form_section">
+            <input class="form_button" type="submit" value="Register">
+        </div>
+    </form>
+</div>
 </body>
 </html>

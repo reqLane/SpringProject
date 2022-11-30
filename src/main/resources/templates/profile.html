@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Profile</title>
+    <link th:href="@{/css/profile.css}" rel="stylesheet">
+</head>
+<body>
+    <h1>
+        Profile
+        <span sec:authorize="hasAuthority('ADMIN')">(ADMIN PROFILE)</span>
+        <span sec:authorize="hasAuthority('STUDENT')">(Student profile)</span>
+    </h1>
+    <div sec:authorize="hasAnyAuthority('STUDENT', 'ADMIN')">
+        <p>Login: <span th:text="${user.login}"></span></p>
+        <p>Name: <span th:text="${user.name}"></span></p>
+        <p>Surname: <span th:text="${user.surname}"></span></p>
+        <p>Email: <span th:text="${user.email}"></span></p>
+
+        <h2>Organizations and Projects:</h2>
+        <div th:each="instance : ${orgsMap}">
+            <button th:text="${instance.key.name}">keyValue</button>
+            <ul th:each="project : ${instance.value}">
+                <li><span th:text="${project.first.name}"></span> earned hours = <span th:text="${project.second}"></span></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

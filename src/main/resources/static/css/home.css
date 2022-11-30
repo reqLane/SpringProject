@@ -1,0 +1,24 @@
+* {
+    font-family: sans-serif;
+}
+header {
+    width: 20%;
+    margin: 50px auto;
+}
+h1, h2 {
+    text-align: center;
+}
+.link_option {
+    text-decoration: none;
+    color: black;
+    border: 1px black solid;
+    padding: 20px;
+    border-radius: 5px;
+    display: inline-block;
+}
+a:visited {
+    color: black;
+}
+a:hover {
+
+}

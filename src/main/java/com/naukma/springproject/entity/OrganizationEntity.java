@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class OrganizationEntity {
+public class OrganizationEntity implements Comparable<OrganizationEntity>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -59,5 +59,10 @@ public class OrganizationEntity {
 
     public void setStudentOrganizations(Set<StudentOrganization> studentOrganizations) {
         this.studentOrganizations = studentOrganizations;
+    }
+
+    @Override
+    public int compareTo(OrganizationEntity o) {
+        return this.name.compareTo(o.name);
     }
 }

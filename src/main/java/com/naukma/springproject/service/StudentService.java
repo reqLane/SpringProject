@@ -1,6 +1,10 @@
 package com.naukma.springproject.service;
 
+import com.naukma.springproject.entity.OrganizationEntity;
+import com.naukma.springproject.entity.UserEntity;
 import com.naukma.springproject.model.User;
+
+import java.util.Set;
 
 public interface StudentService {
 
@@ -8,9 +12,9 @@ public interface StudentService {
 
     User get(Long studentId);
 
-    User getUserByLogin(String login);
+    UserEntity getUserByLogin(String login);
+
+    Set<OrganizationEntity> getOrganizations(UserEntity user);
 
     void delete(Long studentId);
-
-
 }

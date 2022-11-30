@@ -8,7 +8,7 @@ public interface ProjectService {
 
     void addTo(Project project, Long organizationId);
 
-    void addStudent(Long projectId, Long studentId) throws StudentAlreadyEnrolledException, StudentIsNotEnrolledException;
+    void addStudent(Long projectId, String studentLogin) throws StudentAlreadyEnrolledException, StudentIsNotEnrolledException;
 
     Project get(Long projectId);
 
