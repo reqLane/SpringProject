@@ -1,6 +1,6 @@
 package com.naukma.springproject.model;
 
-public class Pair<S, T> {
+public class Pair<S extends Comparable<S>, T> implements Comparable<Pair<S, T>>{
     private S first;
     private T second;
 
@@ -31,5 +31,10 @@ public class Pair<S, T> {
 
     public String toString() {
         return String.format("%s->%s", this.first, this.second);
+    }
+
+    @Override
+    public int compareTo(Pair<S, T> o) {
+        return this.first.compareTo(o.first);
     }
 }

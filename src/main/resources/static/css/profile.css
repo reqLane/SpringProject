@@ -1,0 +1,41 @@
+* {
+    font-family: sans-serif;
+}
+body {
+    background-color: azure;
+}
+header {
+    width: 20%;
+    margin: 30px 5%;
+    padding: 10px 30px;
+    border: 1px black solid;
+    background-color: white;
+}
+header p {
+    font-size: 22px;
+}
+header h1, h2 {
+    text-decoration: underline;
+}
+.list_wrapper {
+    width: 20%;
+    margin: 30px 5%;
+    padding: 10px 30px;
+    border: 1px black solid;
+    background-color: white;
+}
+.list_div button {
+    background-color: lightskyblue;
+    transition: .2s background-color;
+    padding: 10px 20px;
+    border: 1px black solid;
+    border-radius: 1px;
+    font-size: 20px;
+}
+.list_div button:hover {
+    cursor: pointer;
+    background-color: aquamarine;
+}
+.list_div > ul {
+    font-size: 20px;
+}

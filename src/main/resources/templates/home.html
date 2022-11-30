@@ -8,8 +8,10 @@
     <header>
         <h1>Home page</h1>
         <h2>Welcome, <span th:text="${user.name}"></span> <span th:text="${user.surname}"></span></h2>
-        <a class="link_option" th:href="@{/profile}">Profile</a>
-        <a class="link_option" th:href="@{/logout}">Logout</a>
+        <div class="links">
+            <a class="link_option" th:href="@{/profile}">Profile</a>
+            <a class="link_option" th:href="@{/logout}">Logout</a>
+        </div>
     </header>
 
     <hr>
@@ -23,54 +25,64 @@
             <form class="form_default" th:action="@{/organization/register}" th:object="${orgToCreate}" method="post">
                 <h3 class="form_name">Add New Organization</h3>
 
-                <label for="name">Organization Name:</label>:
-                <input th:field="*{name}" type="text" id="name" name="name" required> <br>
-                <input type="submit" value="Register">
+                <div class="form_section">
+                    <label for="name">Organization Name:</label>
+                    <input th:field="*{name}" type="text" id="name" name="name" required>
+                </div>
+                <div class="form_section">
+                    <input class="form_button" type="submit" value="Register">
+                </div>
             </form>
 
-        </div>
-
         <!--2.add student to org (org id + student login)-->
-        <div class="admin_panel_block">
-
             <form class="form_default" th:action="@{/organization/addStudent}" th:object="${studentToOrgPair}" method="post">
                 <h3 class="form_name">Add a Student to Organization</h3>
 
-                <label for="orgId1">Organization Id:</label>:
-                <input th:field="*{first}" type="number" min="1" id="orgId1" name="orgId1" required> <br>
-                <label for="studLogin1">Student login:</label>:
-                <input th:field="*{second}" type="text" id="studLogin1" name="studLogin1" required> <br>
-                <input type="submit" value="Add">
+                <div class="form_section">
+                    <label for="orgId1">Organization Id:</label>
+                    <input th:field="*{first}" type="number" min="1" id="orgId1" name="orgId1" required>
+                </div>
+                <div class="form_section">
+                    <label for="studLogin1">Student login:</label>
+                    <input th:field="*{second}" type="text" id="studLogin1" name="studLogin1" required>
+                </div>
+                <div class="form_section">
+                    <input class="form_button" type="submit" value="Add">
+                </div>
             </form>
 
-        </div>
-
         <!--3.add project to org (org id + proj name)-->
-        <div class="admin_panel_block">
-
             <form class="form_default" th:action="@{/project/addTo}" th:object="${projectToOrgPair}" method="post">
                 <h3 class="form_name">Create New Project in Organization</h3>
 
-                <label for="newProjName">Project name:</label>:
-                <input th:field="*{first}" type="text" id="newProjName" name="newProjName" required> <br>
-                <label for="orgId2">Organization Id:</label>:
-                <input th:field="*{second}" type="number" min="1" id="orgId2" name="orgId2" required> <br>
-                <input type="submit" value="Create">
+                <div class="form_section">
+                    <label for="newProjName">Project name:</label>
+                    <input th:field="*{first}" type="text" id="newProjName" name="newProjName" required>
+                </div>
+                <div class="form_section">
+                    <label for="orgId2">Organization Id:</label>
+                    <input th:field="*{second}" type="number" min="1" id="orgId2" name="orgId2" required>
+                </div>
+                <div class="form_section">
+                    <input class="form_button" type="submit" value="Create">
+                </div>
             </form>
 
-        </div>
-
         <!--4.add student to project (project id + student login)-->
-        <div class="admin_panel_block">
-
             <form class="form_default" th:action="@{/project/addStudent}" th:object="${studentToProjPair}" method="post">
                 <h3 class="form_name">Add a Student to a Project</h3>
 
-                <label for="projId">Project Id:</label>:
-                <input th:field="*{first}" type="number" min="1" id="projId" name="projId" required> <br>
-                <label for="studLogin2">Student login:</label>:
-                <input th:field="*{second}" type="text" id="studLogin2" name="studLogin2" required> <br>
-                <input type="submit" value="Add">
+                <div class="form_section">
+                    <label for="projId">Project Id:</label>
+                    <input th:field="*{first}" type="number" min="1" id="projId" name="projId" required>
+                </div>
+                <div class="form_section">
+                    <label for="studLogin2">Student login:</label>
+                    <input th:field="*{second}" type="text" id="studLogin2" name="studLogin2" required>
+                </div>
+                <div class="form_section">
+                    <input class="form_button" type="submit" value="Add">
+                </div>
             </form>
 
         </div>

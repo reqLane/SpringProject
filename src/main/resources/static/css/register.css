@@ -2,6 +2,7 @@ h1 {
     width: 20%;
     margin: 50px auto;
     font-family: sans-serif;
+    text-align: center;
 }
 .form_wrapper {
     width: 25%;
@@ -31,5 +32,10 @@ input {
 }
 .form_button {
     width: 100%;
+    background-color: lightblue;
+    transition: .2s background-color;
+}
+.form_button:hover {
+    cursor: pointer;
     background-color: aquamarine;
 }

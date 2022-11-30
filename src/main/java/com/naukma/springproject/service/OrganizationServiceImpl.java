@@ -11,9 +11,9 @@ import com.naukma.springproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
@@ -67,7 +67,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     public Set<Pair<ProjectEntity, Long>> getProjectsWithStudent(OrganizationEntity org, UserEntity user) {
-        Set<Pair<ProjectEntity, Long>> projects = new HashSet<>();
+        Set<Pair<ProjectEntity, Long>> projects = new TreeSet<>();
 
         for (ProjectEntity project : org.getProjects()) {
             for (StudentProject connection : project.getStudentProjects()) {
