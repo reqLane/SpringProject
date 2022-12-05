@@ -68,4 +68,9 @@ public class PagesController {
 
         return "profile";
     }
+
+    @GetMapping("/info")
+    public String getInfo(){
+        return "This is site for student organizations. Created by Marchenko Vladyslav, Videyko Andriy and Anatolii Andrusenko. All rights reserved.";
+    }
 }

@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -27,9 +26,20 @@ public class OrganizationController {
         this.organizationService = organizationService;
     }
 
-    @PostMapping("/register")
+    @PostMapping("/register-from-form")
     @Operation(summary = "registering organization operation")
-    public ResponseEntity registerOrganization(@ModelAttribute("orgToCreate") Organization organization){
+    public ResponseEntity registerOrganizationFromForm(@ModelAttribute("orgToCreate") Organization organization){
+        try{
+            organizationService.register(organization);
+            return ResponseEntity.ok("Organization created");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Error 404");
+        }
+    }
+
+    @PostMapping("/register")
+    @Operation(summary = "registering organization by request body operation")
+    public ResponseEntity registerOrganizationByRequestBody(@RequestBody Organization organization){
         try{
             organizationService.register(organization);
             return ResponseEntity.ok("Organization created");

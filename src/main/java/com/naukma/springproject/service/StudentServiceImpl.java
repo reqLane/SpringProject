@@ -42,8 +42,7 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public UserEntity getUserByLogin(String login) {
-        if(studentRepository.findByLogin(login) == null)
-            throw new NoSuchElementException("Student not found.");
+        if(studentRepository.findByLogin(login) == null) return null;
 
         return studentRepository.findByLogin(login);
     }

@@ -30,10 +30,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
         http.authorizeRequests()
+                .antMatchers("/h2-console/**").hasAuthority("ADMIN")
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
-                .antMatchers("/student/register/**").permitAll()
+                .antMatchers("/student/register-from-form/**").permitAll()
                 .antMatchers("/student/**").hasAnyAuthority("STUDENT","ADMIN")
-                .antMatchers("/organization/register", "/organization/addStudent").hasAuthority("ADMIN")
+                .antMatchers("/organization/register-from-form", "/organization/register", "/organization/addStudent").hasAuthority("ADMIN")
                 .antMatchers("/organization/**").hasAnyAuthority("STUDENT","ADMIN")
                 .antMatchers("/project/addTo", "/project/addStudent").hasAuthority("ADMIN")
                 .antMatchers("/project/**").hasAnyAuthority("STUDENT", "ADMIN")
@@ -46,6 +47,9 @@ public class SecurityConfig {
                 .and()
                 .logout()
                 .logoutSuccessUrl("/login");
+
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
 
         return http.build();
     }

@@ -11,4 +11,5 @@ public interface AdminService {
     UserEntity get(Long adminId);
 
     void delete(Long adminId);
+
 }

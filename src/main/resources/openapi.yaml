@@ -15,7 +15,7 @@ tags:
   - name: Admin Controller
     description: Controller for admins of site
 paths:
-  /student/register:
+  /student/register-from-form:
     post:
       tags:
         - Student Controller
@@ -112,7 +112,7 @@ paths:
             '*/*':
               schema:
                 type: string
-  /organization/register:
+  /organization/register-from-form:
     post:
       tags:
         - Organization Controller
