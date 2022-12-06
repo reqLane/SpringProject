@@ -20,16 +20,16 @@ import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
-import static org.mockito.Mockito.times;
+
 
 
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = OrganizationController.class)
+@Import(SecurityConfig.class)
 public class OrganizationTest {
 
     @Autowired
@@ -41,8 +41,6 @@ public class OrganizationTest {
     @Test
     @WithMockUser(authorities = {"ADMIN"})
     void createOrganizationTest() {
-
-
         Organization organization = new Organization();
         String name = "newOrganization";
         organization.setName(name);
