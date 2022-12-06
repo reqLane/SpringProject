@@ -24,28 +24,32 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
-
+import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.csrf;
 
 
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = OrganizationController.class)
-@Import(SecurityConfig.class)
+@Import(OrganizationController.class)
 public class OrganizationTest {
 
     @Autowired
     private WebTestClient webClient;
     @MockBean
-    OrganizationService organizationService;
+    OrganizationRepository organizationRepository;
 
 
     @Test
     @WithMockUser(authorities = {"ADMIN"})
     void createOrganizationTest() {
+
+
         Organization organization = new Organization();
         String name = "newOrganization";
         organization.setName(name);
 
-        webClient.post()
+//        WebTestClient.bindToServer().baseUrl("http://localhost:8080").build();
+
+        webClient.mutateWith(csrf()).post()
                 .uri("/organization/register")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(Mono.just(organization), OrganizationEntity.class)
