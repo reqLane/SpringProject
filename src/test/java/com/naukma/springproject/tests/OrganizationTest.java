@@ -5,6 +5,8 @@ import com.naukma.springproject.controller.OrganizationController;
 import com.naukma.springproject.entity.OrganizationEntity;
 import com.naukma.springproject.model.Organization;
 import com.naukma.springproject.repository.OrganizationRepository;
+import com.naukma.springproject.service.OrganizationService;
+import com.naukma.springproject.service.OrganizationServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -26,13 +28,12 @@ import static org.mockito.Mockito.times;
 
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = OrganizationController.class)
-@Import(OrganizationController.class)
 public class OrganizationTest {
 
     @Autowired
     private WebTestClient webClient;
     @MockBean
-    OrganizationRepository repository;
+    OrganizationService organizationService;
 
 
     @Test
