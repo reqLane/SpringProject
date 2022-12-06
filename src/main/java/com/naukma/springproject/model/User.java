@@ -1,10 +1,24 @@
 package com.naukma.springproject.model;
 
 import com.naukma.springproject.entity.UserEntity;
+import com.naukma.springproject.enums.Role;
 
 import javax.validation.constraints.NotBlank;
 
 public class User {
+
+    public User(String login, String password, String name, String surname, String email){
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+    }
+
+    public User(){
+
+    }
+
     @NotBlank(message = "login is mandatory")
     private String login;
     @NotBlank(message = "password is mandatory")

@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 import com.naukma.springproject.entity.UserEntity;
 import com.naukma.springproject.enums.Role;
+import com.naukma.springproject.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,17 +31,17 @@ public class UserPermissionsTest {
     public void testsOfUsersPermissions() throws Exception {
         String login = "testUser";
         String name = "Ivan";
-        UserEntity userEntity = new UserEntity(login, "b2estUser", name, "Pavlov", Role.STUDENT, "ivanPav@gmail.com");
+        User user = new User(login, "b2estUser", name, "Pavlov", "ivanPav@gmail.com");
         Gson gson = new Gson();
-        String json = gson.toJson(userEntity);
+        String json = gson.toJson(user);
         mvc.perform(post("/student/register")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(json)
                         )
                 .andExpect(status().isOk());
 
-        UserEntity userEntity1 = new UserEntity("secondUser", "b2estUser", name, "Pavlov", Role.STUDENT, "ivanPav@gmail.com");
-        String json1 = gson.toJson(userEntity1);
+        User user1 = new User("secondUser", "b2estUser", name, "Pavlov", "ivanPav@gmail.com");
+        String json1 = gson.toJson(user1);
 
         mvc.perform(post("/admin/register")
                         .contentType(MediaType.APPLICATION_JSON)

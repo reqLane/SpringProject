@@ -1,7 +1,9 @@
 package com.naukma.springproject.tests;
 
+import com.naukma.springproject.config.SecurityConfig;
 import com.naukma.springproject.controller.OrganizationController;
 import com.naukma.springproject.entity.OrganizationEntity;
+import com.naukma.springproject.model.Organization;
 import com.naukma.springproject.repository.OrganizationRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +16,7 @@ import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
@@ -31,17 +34,18 @@ public class OrganizationTest {
     @MockBean
     OrganizationRepository repository;
 
+
     @Test
     @WithMockUser(authorities = {"ADMIN"})
     void createOrganizationTest() {
-        OrganizationEntity organizationEntity = new OrganizationEntity();
+        Organization organization = new Organization();
         String name = "newOrganization";
-        organizationEntity.setName(name);
+        organization.setName(name);
 
         webClient.post()
                 .uri("/organization/register")
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(Mono.just(organizationEntity), OrganizationEntity.class)
+                .body(Mono.just(organization), OrganizationEntity.class)
                 .exchange().expectStatus().isOk();
 
         webClient.get()
