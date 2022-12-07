@@ -26,7 +26,6 @@ import reactor.core.publisher.Mono;
 
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.csrf;
 
-
 @ExtendWith(SpringExtension.class)
 @WebFluxTest(controllers = OrganizationController.class)
 @Import(OrganizationController.class)
@@ -47,10 +46,10 @@ public class OrganizationTest {
         String name = "newOrganization";
         organization.setName(name);
 
-//        WebTestClient.bindToServer().baseUrl("http://localhost:8080").build();
-
         webClient.mutateWith(csrf()).post()
                 .uri("/organization/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .body(Mono.just(organization), OrganizationEntity.class)
                 .exchange().expectStatus().isOk();
