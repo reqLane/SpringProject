@@ -78,6 +78,11 @@ public class StudentController {
         }
     }
 
+    @GetMapping("/info")
+    public String testInfo(){
+        return "info (hello test)";
+    }
+
     @DeleteMapping("/delete/{studentId}")
     @Operation(summary = "deleting student operation")
     public ResponseEntity deleteStudent(@PathVariable Long studentId){
