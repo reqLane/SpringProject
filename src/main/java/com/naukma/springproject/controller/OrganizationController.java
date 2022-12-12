@@ -1,5 +1,6 @@
 package com.naukma.springproject.controller;
 
+import com.naukma.springproject.aspects.LogExeTime;
 import com.naukma.springproject.exception.StudentAlreadyEnrolledException;
 import com.naukma.springproject.model.Organization;
 import com.naukma.springproject.model.Pair;
@@ -26,7 +27,8 @@ public class OrganizationController {
         this.organizationService = organizationService;
     }
 
-    @PostMapping("/register-from-form")
+    @PostMapping("/register")
+    @LogExeTime
     @Operation(summary = "registering organization operation")
     public ResponseEntity registerOrganizationFromForm(@ModelAttribute("orgToCreate") Organization organization){
         try{
@@ -37,7 +39,7 @@ public class OrganizationController {
         }
     }
 
-    @PostMapping("/register")
+    @PostMapping("/register-test")
     @Operation(summary = "registering organization by request body operation")
     public ResponseEntity registerOrganizationByRequestBody(@RequestBody Organization organization){
         try{
@@ -49,6 +51,7 @@ public class OrganizationController {
     }
 
     @PostMapping("/addStudent")
+    @LogExeTime
     @Operation(summary = "adding student to organization operation")
     public ResponseEntity addStudent(@ModelAttribute("studentToOrgPair") Pair<String, String> studentOrgPair) {
         try{

@@ -1,5 +1,6 @@
 package com.naukma.springproject.service;
 
+import com.naukma.springproject.aspects.ParametersLogging;
 import com.naukma.springproject.entity.*;
 import com.naukma.springproject.entity.key.StudentOrganizationKey;
 import com.naukma.springproject.entity.key.StudentProjectKey;

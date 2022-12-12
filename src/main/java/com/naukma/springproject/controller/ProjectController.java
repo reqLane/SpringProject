@@ -1,5 +1,6 @@
 package com.naukma.springproject.controller;
 
+import com.naukma.springproject.aspects.LogExeTime;
 import com.naukma.springproject.exception.StudentAlreadyEnrolledException;
 import com.naukma.springproject.exception.StudentIsNotEnrolledException;
 import com.naukma.springproject.model.Pair;
@@ -29,6 +30,7 @@ public class ProjectController {
     }
 
     @PostMapping("/addTo")
+    @LogExeTime
     @Operation(summary = "adding project to organization operation")
     public ResponseEntity addToOrganization(@ModelAttribute("projectToOrgPair") Pair<String, String> projectToOrgPair){
         try{
@@ -42,6 +44,7 @@ public class ProjectController {
     }
 
     @PostMapping("/addStudent")
+    @LogExeTime
     @Operation(summary = "adding student to project operation")
     public ResponseEntity addStudent(@ModelAttribute("studentToProjPair") Pair<String, String> studentToProjPair) {
         try{

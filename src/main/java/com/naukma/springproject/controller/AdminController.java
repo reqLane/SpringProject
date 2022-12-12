@@ -1,6 +1,5 @@
 package com.naukma.springproject.controller;
 
-import com.naukma.springproject.entity.UserEntity;
 import com.naukma.springproject.model.User;
 import com.naukma.springproject.service.AdminService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,7 +7,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 

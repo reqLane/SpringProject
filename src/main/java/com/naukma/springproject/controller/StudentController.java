@@ -1,5 +1,6 @@
 package com.naukma.springproject.controller;
 
+import com.naukma.springproject.aspects.LogExeTime;
 import com.naukma.springproject.model.User;
 import com.naukma.springproject.service.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +25,8 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @PostMapping("/register-from-form")
+    @PostMapping("/register")
+    @LogExeTime
     @Operation(summary = "registering student operation via registering form")
     public ResponseEntity registerStudentFromForm(@ModelAttribute("user") User student){
         try{
@@ -36,7 +38,7 @@ public class StudentController {
         }
     }
 
-    @PostMapping("/register")
+    @PostMapping("/register-test")
     @Operation(summary = "registering student with request body operation")
     public ResponseEntity registerStudentByRequestBody(@RequestBody User student){
         try{

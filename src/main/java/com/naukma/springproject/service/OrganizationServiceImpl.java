@@ -1,5 +1,6 @@
 package com.naukma.springproject.service;
 
+import com.naukma.springproject.aspects.ParametersLogging;
 import com.naukma.springproject.entity.*;
 import com.naukma.springproject.entity.key.StudentOrganizationKey;
 import com.naukma.springproject.exception.StudentAlreadyEnrolledException;
@@ -66,6 +67,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         studentOrganizationRepository.save(connection);
     }
 
+    @ParametersLogging
     public Set<Pair<ProjectEntity, Long>> getProjectsWithStudent(OrganizationEntity org, UserEntity user) {
         Set<Pair<ProjectEntity, Long>> projects = new TreeSet<>();
 

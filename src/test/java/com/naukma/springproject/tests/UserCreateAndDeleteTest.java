@@ -45,7 +45,7 @@ public class UserCreateAndDeleteTest {
 
         mockMvc.perform(get("/student/info")).andExpect(status().isOk());
 
-        mockMvc.perform(post("/student/register")
+        mockMvc.perform(post("/student/register-test")
                         .contentType("application/json")
                         .content(json)
                 .characterEncoding("utf-8"))

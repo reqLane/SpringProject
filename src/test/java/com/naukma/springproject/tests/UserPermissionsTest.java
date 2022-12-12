@@ -35,7 +35,7 @@ public class UserPermissionsTest {
         User user = new User(login, "b2estUser", name, "Pavlov", "ivanPav@gmail.com");
         Gson gson = new Gson();
         String json = gson.toJson(user);
-        mvc.perform(post("/student/register")
+        mvc.perform(post("/student/register-test")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(json)
                         )

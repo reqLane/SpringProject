@@ -7,7 +7,7 @@
 <body>
 <h1>Registration page</h1>
 <div class="form_wrapper">
-    <form class="register_form" th:action="@{/student/register-from-form}" th:object="${user}" method="post">
+    <form class="register_form" th:action="@{/student/register}" th:object="${user}" method="post">
         <div class="form_section">
             <label for="login">Username:</label>
             <input th:field="*{login}" type="text" id="login" name="login" autofocus="autofocus" required>

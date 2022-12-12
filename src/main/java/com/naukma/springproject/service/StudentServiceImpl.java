@@ -1,5 +1,6 @@
 package com.naukma.springproject.service;
 
+import com.naukma.springproject.aspects.ParametersLogging;
 import com.naukma.springproject.entity.OrganizationEntity;
 import com.naukma.springproject.entity.StudentOrganization;
 import com.naukma.springproject.entity.UserEntity;
@@ -47,6 +48,7 @@ public class StudentServiceImpl implements StudentService{
         return studentRepository.findByLogin(login);
     }
 
+    @ParametersLogging
     public Set<OrganizationEntity> getOrganizations(UserEntity user) {
         Set<OrganizationEntity> orgs = new TreeSet<>();
 

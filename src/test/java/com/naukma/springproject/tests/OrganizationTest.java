@@ -34,7 +34,7 @@ public class OrganizationTest {
         organization.setName(name);
 
         webClient.post()
-                .uri("/organization/register")
+                .uri("/organization/register-test")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
