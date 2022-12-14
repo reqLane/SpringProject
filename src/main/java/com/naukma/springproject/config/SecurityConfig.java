@@ -35,6 +35,8 @@ public class SecurityConfig {
                 .antMatchers("/organization/**").hasAnyAuthority("STUDENT","ADMIN")
                 .antMatchers("/project/addTo", "/project/addStudent", "/project/members/setHours").hasAuthority("ADMIN")
                 .antMatchers("/project/**").hasAnyAuthority("STUDENT", "ADMIN")
+                .antMatchers("/request/getAll", "/request/decline").hasAuthority("ADMIN")
+                .antMatchers("/request/create").hasAuthority("STUDENT")
                 .antMatchers("/home", "/profile").authenticated()
                 .antMatchers("/**").permitAll()
                 .and()

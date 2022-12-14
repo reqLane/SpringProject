@@ -81,7 +81,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void setHoursForMember(String projectName, String studentLogin, Long hoursAmount) throws StudentIsNotEnrolledException {
+    public void setHoursForMember(String studentLogin, String projectName, Long hoursAmount) throws StudentIsNotEnrolledException {
         if(projectRepository.findByName(projectName) == null)
             throw new NoSuchElementException("Project not found");
         if(studentRepository.findByLogin(studentLogin) == null)

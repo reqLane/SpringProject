@@ -5,6 +5,7 @@ import com.naukma.springproject.exception.StudentAlreadyEnrolledException;
 import com.naukma.springproject.exception.StudentIsNotEnrolledException;
 import com.naukma.springproject.model.Pair;
 import com.naukma.springproject.model.Project;
+import com.naukma.springproject.service.HourRequestService;
 import com.naukma.springproject.service.ProjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -23,10 +23,12 @@ import java.util.NoSuchElementException;
 @Tag(name = "Project Controller", description = "Controller for projects of organizations")
 public class ProjectController {
     private final ProjectService projectService;
+    private final HourRequestService hourRequestService;
 
     @Autowired
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(ProjectService projectService, HourRequestService hourRequestService) {
         this.projectService = projectService;
+        this.hourRequestService = hourRequestService;
     }
 
     @PostMapping("/addTo")
@@ -65,12 +67,15 @@ public class ProjectController {
         }
     }
 
-    @PatchMapping("/members/setHours")
+    @PostMapping("/members/setHours")
     @Operation(summary = "setting work hours to student")
-    public ResponseEntity setHoursForMember(@ModelAttribute("projectName") String projectName,
-                                            @ModelAttribute("studentHours") Pair<String, String> studentHours) {
+    public ResponseEntity setHoursForMember(@RequestParam("requestId") String requestId,
+                                            @RequestParam("studentLogin") String studentLogin,
+                                            @RequestParam("projectName") String projectName,
+                                            @RequestParam("hoursAmount") String hoursAmount) {
         try {
-            projectService.setHoursForMember(projectName, studentHours.getFirst(), Long.parseLong(studentHours.getSecond()));
+            projectService.setHoursForMember(studentLogin, projectName, Long.parseLong(hoursAmount));
+            hourRequestService.delete(Long.parseLong(requestId));
             return ResponseEntity.ok("Hours set for the student");
         } catch(Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

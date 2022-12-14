@@ -12,7 +12,7 @@ public interface ProjectService {
 
     Project get(Long projectId);
 
-    void setHoursForMember(String projectName, String studentLogin, Long hoursAmount) throws StudentIsNotEnrolledException;
+    void setHoursForMember(String studentLogin, String projectName, Long hoursAmount) throws StudentIsNotEnrolledException;
 
     void delete(Long projectId);
 }

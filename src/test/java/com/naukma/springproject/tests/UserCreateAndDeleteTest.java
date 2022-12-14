@@ -34,8 +34,6 @@ public class UserCreateAndDeleteTest {
         Gson gson = new Gson();
         String json = gson.toJson(user);
 
-        mockMvc.perform(get("/student/info")).andExpect(status().isOk());
-
         mockMvc.perform(post("/student/register-test")
                         .contentType("application/json")
                         .content(json)
