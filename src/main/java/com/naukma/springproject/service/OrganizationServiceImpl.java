@@ -34,6 +34,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     public void register(Organization organization) {
+        if(organizationRepository.findByName(organization.getName()) != null)
+            throw new IllegalArgumentException("Organization name already used");
+
         organizationRepository.save(OrganizationEntity.toEntity(organization));
     }
 
@@ -46,17 +49,17 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public void addStudent(Long organizationId, String studentLogin) throws StudentAlreadyEnrolledException {
-        if(organizationRepository.findById(organizationId).isEmpty())
+    public void addStudent(String organizationName, String studentLogin) throws StudentAlreadyEnrolledException {
+        if(organizationRepository.findByName(organizationName) == null)
             throw new NoSuchElementException("Organization not found.");
-        OrganizationEntity organization = organizationRepository.findById(organizationId).get();
+        OrganizationEntity organization = organizationRepository.findByName(organizationName);
         if(studentRepository.findByLogin(studentLogin) == null)
             throw new NoSuchElementException("Student not found.");
         UserEntity student = studentRepository.findByLogin(studentLogin);
 
         //already enrolled
         StudentOrganizationKey embeddedId = new StudentOrganizationKey();
-        embeddedId.setOrganizationId(organizationId);
+        embeddedId.setOrganizationId(organization.getId());
         embeddedId.setStudentId(student.getId());
         if(studentOrganizationRepository.findById(embeddedId).isPresent())
             throw new StudentAlreadyEnrolledException("Student already enrolled in the organization");

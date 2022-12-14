@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .antMatchers("/student/**").hasAnyAuthority("STUDENT","ADMIN")
                 .antMatchers("/organization/register-test", "/organization/register", "/organization/addStudent").hasAuthority("ADMIN")
                 .antMatchers("/organization/**").hasAnyAuthority("STUDENT","ADMIN")
-                .antMatchers("/project/addTo", "/project/addStudent").hasAuthority("ADMIN")
+                .antMatchers("/project/addTo", "/project/addStudent", "/project/members/setHours").hasAuthority("ADMIN")
                 .antMatchers("/project/**").hasAnyAuthority("STUDENT", "ADMIN")
                 .antMatchers("/home", "/profile").authenticated()
                 .antMatchers("/**").permitAll()

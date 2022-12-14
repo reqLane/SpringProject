@@ -35,7 +35,7 @@ public class OrganizationController {
             organizationService.register(organization);
             return ResponseEntity.ok("Organization created");
         }catch (Exception e){
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -46,7 +46,7 @@ public class OrganizationController {
             organizationService.register(organization);
             return ResponseEntity.ok("Organization created");
         }catch (Exception e){
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -55,10 +55,10 @@ public class OrganizationController {
     @Operation(summary = "adding student to organization operation")
     public ResponseEntity addStudent(@ModelAttribute("studentToOrgPair") Pair<String, String> studentOrgPair) {
         try{
-            organizationService.addStudent(Long.parseLong(studentOrgPair.getFirst()), studentOrgPair.getSecond());
+            organizationService.addStudent(studentOrgPair.getFirst(), studentOrgPair.getSecond());
             return ResponseEntity.ok("Student added to organization");
         }catch (Exception e){
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -68,7 +68,7 @@ public class OrganizationController {
         try {
             return ResponseEntity.ok(organizationService.get(organizationId));
         } catch(Exception e) {
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -79,10 +79,15 @@ public class OrganizationController {
             organizationService.delete(organizationId);
             return ResponseEntity.ok("Organization deleted");
         }catch (Exception e){
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String handleException(IllegalArgumentException e) {
+        //logging error
+        return e.getMessage();
+    }
     @ExceptionHandler(NoSuchElementException.class)
     public String handleException(NoSuchElementException e) {
         //logging error

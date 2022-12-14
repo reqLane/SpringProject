@@ -26,7 +26,10 @@ public class StudentServiceImpl implements StudentService{
         this.studentRepository = studentRepository;
     }
 
-    public void register(User student){
+    public void register(User student) {
+        if(studentRepository.findByLogin(student.getLogin()) != null)
+            throw new IllegalArgumentException("Student login already used");
+
         UserEntity ue = UserEntity.toEntity(student);
         ue.setPassword(passwordEncoder.encode(ue.getPassword()));
         ue.setRole(Role.STUDENT);

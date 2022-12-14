@@ -19,7 +19,10 @@ public class AdminServiceImpl implements AdminService{
         this.adminRepository = adminRepository;
     }
 
-    public void register(User admin){
+    public void register(User admin) {
+        if(adminRepository.findByLogin(admin.getLogin()) != null)
+            throw new IllegalArgumentException("Admin login already used");
+
         UserEntity ue = UserEntity.toEntity(admin);
         ue.setRole(Role.ADMIN);
         adminRepository.save(ue);

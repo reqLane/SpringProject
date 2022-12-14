@@ -36,10 +36,10 @@ public class ProjectController {
         try{
             Project project = new Project();
             project.setName(projectToOrgPair.getFirst());
-            projectService.addTo(project, Long.parseLong(projectToOrgPair.getSecond()));
+            projectService.addTo(project, projectToOrgPair.getSecond());
             return ResponseEntity.ok("Project created");
         }catch (Exception e){
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -48,10 +48,10 @@ public class ProjectController {
     @Operation(summary = "adding student to project operation")
     public ResponseEntity addStudent(@ModelAttribute("studentToProjPair") Pair<String, String> studentToProjPair) {
         try{
-            projectService.addStudent(Long.parseLong(studentToProjPair.getFirst()), studentToProjPair.getSecond());
+            projectService.addStudent(studentToProjPair.getFirst(), studentToProjPair.getSecond());
             return ResponseEntity.ok("Student added to project");
         }catch (Exception e){
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -61,20 +61,19 @@ public class ProjectController {
         try {
             return ResponseEntity.ok(projectService.get(projectId));
         } catch(Exception e) {
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @PatchMapping("/{projectId}/members/{studentId}/setHours")
+    @PatchMapping("/members/setHours")
     @Operation(summary = "setting work hours to student")
-    public ResponseEntity setHoursForMember(@PathVariable Long projectId,
-                                            @PathVariable Long studentId,
-                                            @RequestParam Long hoursAmount) {
+    public ResponseEntity setHoursForMember(@ModelAttribute("projectName") String projectName,
+                                            @ModelAttribute("studentHours") Pair<String, String> studentHours) {
         try {
-            projectService.setHoursForMember(projectId, studentId, hoursAmount);
+            projectService.setHoursForMember(projectName, studentHours.getFirst(), Long.parseLong(studentHours.getSecond()));
             return ResponseEntity.ok("Hours set for the student");
         } catch(Exception e) {
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -85,10 +84,15 @@ public class ProjectController {
             projectService.delete(studentProjectId);
             return ResponseEntity.ok("Project deleted");
         }catch (Exception e){
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String handleException(IllegalArgumentException e) {
+        //logging error
+        return e.getMessage();
+    }
     @ExceptionHandler(NoSuchElementException.class)
     public String handleException(NoSuchElementException e) {
         //logging error

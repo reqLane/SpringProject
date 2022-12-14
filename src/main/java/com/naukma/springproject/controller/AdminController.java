@@ -34,7 +34,7 @@ public class AdminController {
             restTemplate.delete(url);
             return ResponseEntity.ok("Organization deleted");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -46,7 +46,7 @@ public class AdminController {
             return ResponseEntity.ok("Admin created");
         }catch (Exception e){
             e.printStackTrace();
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -56,7 +56,7 @@ public class AdminController {
         try{
             return ResponseEntity.ok(adminService.get(adminId));
         }catch (Exception e){
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -67,10 +67,15 @@ public class AdminController {
             adminService.delete(adminId);
             return ResponseEntity.ok("Admin deleted");
         }catch (Exception e){
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String handleException(IllegalArgumentException e) {
+        //logging error
+        return e.getMessage();
+    }
     @ExceptionHandler(NoSuchElementException.class)
     public String handleException(NoSuchElementException e) {
         //logging error

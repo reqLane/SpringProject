@@ -15,7 +15,7 @@ public interface OrganizationService {
 
     Organization get(Long organizationId);
 
-    void addStudent(Long organizationId, String studentLogin) throws StudentAlreadyEnrolledException;
+    void addStudent(String organizationName, String studentLogin) throws StudentAlreadyEnrolledException;
 
     Set<Pair<ProjectEntity, Long>> getProjectsWithStudent(OrganizationEntity org, UserEntity user);
 

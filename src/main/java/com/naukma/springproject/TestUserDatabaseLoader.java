@@ -48,9 +48,9 @@ public class TestUserDatabaseLoader {
             organizationService.register(org2);
             organizationService.register(org3);
 
-            organizationService.addStudent(1L, "andriy");
-            organizationService.addStudent(2L, "andriy");
-            organizationService.addStudent(3L, "andriy");
+            organizationService.addStudent("Org_1st", "andriy");
+            organizationService.addStudent("Org_2nd", "andriy");
+            organizationService.addStudent("Org_3rd", "andriy");
 
             Project proj1 = new Project();
             proj1.setName("proj1");
@@ -71,25 +71,25 @@ public class TestUserDatabaseLoader {
             Project proj9 = new Project();
             proj9.setName("proj9");
 
-            projectService.addTo(proj1, 1L);
-            projectService.addTo(proj2, 1L);
-            projectService.addTo(proj3, 1L);
-            projectService.addTo(proj4, 2L);
-            projectService.addTo(proj5, 2L);
-            projectService.addTo(proj6, 2L);
-            projectService.addTo(proj7, 3L);
-            projectService.addTo(proj8, 3L);
-            projectService.addTo(proj9, 3L);
+            projectService.addTo(proj1, "Org_1st");
+            projectService.addTo(proj2, "Org_1st");
+            projectService.addTo(proj3, "Org_1st");
+            projectService.addTo(proj4, "Org_2nd");
+            projectService.addTo(proj5, "Org_2nd");
+            projectService.addTo(proj6, "Org_2nd");
+            projectService.addTo(proj7, "Org_3rd");
+            projectService.addTo(proj8, "Org_3rd");
+            projectService.addTo(proj9, "Org_3rd");
 
-            projectService.addStudent(1L, "andriy");
-            projectService.addStudent(2L, "andriy");
-            projectService.addStudent(3L, "andriy");
-            projectService.addStudent(4L, "andriy");
-            projectService.addStudent(5L, "andriy");
-            projectService.addStudent(6L, "andriy");
-            projectService.addStudent(7L, "andriy");
-            projectService.addStudent(8L, "andriy");
-            projectService.addStudent(9L, "andriy");
+            projectService.addStudent("proj1", "andriy");
+            projectService.addStudent("proj2", "andriy");
+            projectService.addStudent("proj3", "andriy");
+            projectService.addStudent("proj4", "andriy");
+            projectService.addStudent("proj5", "andriy");
+            projectService.addStudent("proj6", "andriy");
+            projectService.addStudent("proj7", "andriy");
+            projectService.addStudent("proj8", "andriy");
+            projectService.addStudent("proj9", "andriy");
         };
     }
 }

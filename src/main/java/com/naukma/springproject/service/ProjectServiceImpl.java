@@ -1,6 +1,5 @@
 package com.naukma.springproject.service;
 
-import com.naukma.springproject.aspects.ParametersLogging;
 import com.naukma.springproject.entity.*;
 import com.naukma.springproject.entity.key.StudentOrganizationKey;
 import com.naukma.springproject.entity.key.StudentProjectKey;
@@ -36,10 +35,12 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void addTo(Project project, Long organizationId) {
-        if(organizationRepository.findById(organizationId).isEmpty())
+    public void addTo(Project project, String organizationName) {
+        if(organizationRepository.findByName(organizationName) == null)
             throw new NoSuchElementException("Organization not found");
-        OrganizationEntity organization = organizationRepository.findById(organizationId).get();
+        if(projectRepository.findByName(project.getName()) != null)
+            throw new IllegalArgumentException("Project name already used");
+        OrganizationEntity organization = organizationRepository.findByName(organizationName);
 
         ProjectEntity projectEntity = ProjectEntity.toEntity(project);
 
@@ -48,21 +49,21 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void addStudent(Long projectId, String studentLogin) throws StudentAlreadyEnrolledException, StudentIsNotEnrolledException {
-        if(projectRepository.findById(projectId).isEmpty())
+    public void addStudent(String projectName, String studentLogin) throws StudentAlreadyEnrolledException, StudentIsNotEnrolledException {
+        if(projectRepository.findByName(projectName) == null)
             throw new NoSuchElementException("Project not found");
-        ProjectEntity project = projectRepository.findById(projectId).get();
+        ProjectEntity project = projectRepository.findByName(projectName);
         if(studentRepository.findByLogin(studentLogin) == null)
             throw new NoSuchElementException("Student not found.");
         UserEntity student = studentRepository.findByLogin(studentLogin);
 
         //check if student belongs to project's organization
-        ProjectEntity projectEntity = projectRepository.findById(projectId).get();
+        ProjectEntity projectEntity = projectRepository.findById(project.getId()).get();
         if(!studentBelongsToOrganization(student.getId(), projectEntity.getOrganization().getId()))
             throw new StudentIsNotEnrolledException("Student is not enrolled in the project's organization");
 
         //already enrolled
-        if(studentBelongsToProject(projectId, student.getId()))
+        if(studentBelongsToProject(project.getId(), student.getId()))
             throw new StudentAlreadyEnrolledException("Student already enrolled in the project");
 
         StudentProject connection = new StudentProject();
@@ -80,19 +81,22 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void setHoursForMember(Long projectId, Long studentId, Long hoursAmount) throws StudentIsNotEnrolledException {
-        if(projectRepository.findById(projectId).isEmpty())
+    public void setHoursForMember(String projectName, String studentLogin, Long hoursAmount) throws StudentIsNotEnrolledException {
+        if(projectRepository.findByName(projectName) == null)
             throw new NoSuchElementException("Project not found");
-        if(studentRepository.findById(studentId).isEmpty())
+        if(studentRepository.findByLogin(studentLogin) == null)
             throw new NoSuchElementException("Student not found");
 
+        ProjectEntity project = projectRepository.findByName(projectName);
+        UserEntity student = studentRepository.findByLogin(studentLogin);
+
         //check if student belongs to the project
-        if(!studentBelongsToProject(projectId, studentId))
+        if(!studentBelongsToProject(project.getId(), student.getId()))
             throw new StudentIsNotEnrolledException("Student is not enrolled in the project");
 
         StudentProjectKey embeddedId = new StudentProjectKey();
-        embeddedId.setProjectId(projectId);
-        embeddedId.setStudentId(studentId);
+        embeddedId.setProjectId(project.getId());
+        embeddedId.setStudentId(student.getId());
         StudentProject connection = studentProjectRepository.findById(embeddedId).get();
         connection.setHours(hoursAmount);
         studentProjectRepository.save(connection);

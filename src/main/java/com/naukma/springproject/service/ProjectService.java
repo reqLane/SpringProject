@@ -6,13 +6,13 @@ import com.naukma.springproject.model.Project;
 
 public interface ProjectService {
 
-    void addTo(Project project, Long organizationId);
+    void addTo(Project project, String organizationName);
 
-    void addStudent(Long projectId, String studentLogin) throws StudentAlreadyEnrolledException, StudentIsNotEnrolledException;
+    void addStudent(String projectName, String studentLogin) throws StudentAlreadyEnrolledException, StudentIsNotEnrolledException;
 
     Project get(Long projectId);
 
-    void setHoursForMember(Long projectId, Long studentId, Long hoursAmount) throws StudentIsNotEnrolledException;
+    void setHoursForMember(String projectName, String studentLogin, Long hoursAmount) throws StudentIsNotEnrolledException;
 
     void delete(Long projectId);
 }

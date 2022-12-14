@@ -34,7 +34,7 @@ public class StudentController {
             studentService.register(student);
             return ResponseEntity.ok("Student created");
         }catch (Exception e){
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -46,7 +46,7 @@ public class StudentController {
             studentService.register(student);
             return ResponseEntity.ok("Student created");
         }catch (Exception e){
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -56,7 +56,7 @@ public class StudentController {
         try {
             return ResponseEntity.ok(studentService.get(studentId));
         } catch(Exception e) {
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -66,7 +66,7 @@ public class StudentController {
         try {
             return ResponseEntity.ok(studentService.getUserByLogin(userLogin));
         } catch(Exception e) {
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -76,7 +76,7 @@ public class StudentController {
         try {
             return ResponseEntity.ok(studentService.getUserByLogin(userName));
         } catch(Exception e) {
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -92,10 +92,15 @@ public class StudentController {
             studentService.delete(studentId);
             return ResponseEntity.ok("Student deleted");
         }catch (Exception e){
-            return ResponseEntity.badRequest().body("Error 404");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String handleException(IllegalArgumentException e) {
+        //logging error
+        return e.getMessage();
+    }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public String handleException(MethodArgumentNotValidException e) {
         //logging error
