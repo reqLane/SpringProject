@@ -1,49 +1,46 @@
 package com.naukma.springproject.tests;
 
-import com.naukma.springproject.config.SecurityConfig;
-import com.naukma.springproject.entity.OrganizationEntity;
+import com.google.gson.Gson;
 import com.naukma.springproject.model.Organization;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.reactive.server.WebTestClient;
-import reactor.core.publisher.Mono;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.web.servlet.MockMvc;
 
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureWebTestClient
-@AutoConfigureMockMvc(addFilters = false)
-@Import(SecurityConfig.class)
+
+@SpringBootTest
+@AutoConfigureMockMvc
+@AutoConfigureTestDatabase
 public class OrganizationTest {
 
     @Autowired
-    private WebTestClient webClient;
+    private MockMvc mockMvc;
 
 
     @Test
-    void createOrganizationTest() {
+    @WithMockUser(authorities = "ADMIN")
+    void createOrganizationTest() throws Exception {
 
         Organization organization = new Organization();
         String name = "newOrganization";
         organization.setName(name);
+        String json = new Gson().toJson(organization);
 
-        webClient.post()
-                .uri("/organization/register-test")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .body(Mono.just(organization), OrganizationEntity.class)
-                .exchange().expectStatus().isOk();
+        mockMvc.perform(post("/organization/register-test")
+                        .contentType("application/json")
+                        .content(json)
+                        .characterEncoding("utf-8"))
+                .andExpect(status().isOk());
 
-        webClient.get()
-                .uri("/organization/get/1")
-                .exchange()
-                .expectStatus().isOk();
+        mockMvc.perform(get("/organization/get/newOrganization"))
+                        .andExpect(status().isOk());
     }
 }

@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
-import com.naukma.springproject.entity.UserEntity;
-import com.naukma.springproject.enums.Role;
 import com.naukma.springproject.model.User;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
