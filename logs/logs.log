@@ -1234,3 +1234,21 @@
 15-12-2022 01:46:46 INFO --- FileLogger : Method return value: []
 15-12-2022 01:46:57 INFO --- FileLogger : Method - getOrganizations, arguments: com.naukma.springproject.entity.UserEntity@5a0794ab
 15-12-2022 01:46:57 INFO --- FileLogger : Method return value: []
+15-12-2022 08:56:16 INFO --- FileLogger : Method - getOrganizations, arguments: com.naukma.springproject.entity.UserEntity@5672e713
+15-12-2022 08:56:16 INFO --- FileLogger : Method return value: [com.naukma.springproject.entity.OrganizationEntity@5ecffa78, com.naukma.springproject.entity.OrganizationEntity@6c45d962, com.naukma.springproject.entity.OrganizationEntity@7253cd4b]
+15-12-2022 08:56:16 INFO --- FileLogger : Method - getProjectsWithStudent, arguments: com.naukma.springproject.entity.OrganizationEntity@5ecffa78 com.naukma.springproject.entity.UserEntity@5672e713
+15-12-2022 08:56:16 INFO --- FileLogger : Method return value: [com.naukma.springproject.entity.ProjectEntity@5d9fe38b->0, com.naukma.springproject.entity.ProjectEntity@6125f014->0, com.naukma.springproject.entity.ProjectEntity@1bd671db->0]
+15-12-2022 08:56:16 INFO --- FileLogger : Method - getProjectsWithStudent, arguments: com.naukma.springproject.entity.OrganizationEntity@6c45d962 com.naukma.springproject.entity.UserEntity@5672e713
+15-12-2022 08:56:16 INFO --- FileLogger : Method return value: [com.naukma.springproject.entity.ProjectEntity@40899574->0, com.naukma.springproject.entity.ProjectEntity@2e887d78->0, com.naukma.springproject.entity.ProjectEntity@2b7d6690->0]
+15-12-2022 08:56:16 INFO --- FileLogger : Method - getProjectsWithStudent, arguments: com.naukma.springproject.entity.OrganizationEntity@7253cd4b com.naukma.springproject.entity.UserEntity@5672e713
+15-12-2022 08:56:16 INFO --- FileLogger : Method return value: [com.naukma.springproject.entity.ProjectEntity@27fe9fd5->0, com.naukma.springproject.entity.ProjectEntity@150fc95a->0, com.naukma.springproject.entity.ProjectEntity@4012b2fa->0]
+15-12-2022 08:56:19 INFO --- FileLogger : Method - getOrganizations, arguments: com.naukma.springproject.entity.UserEntity@6c54182f
+15-12-2022 08:56:19 INFO --- FileLogger : Method return value: [com.naukma.springproject.entity.OrganizationEntity@200f9143, com.naukma.springproject.entity.OrganizationEntity@72e24ec4, com.naukma.springproject.entity.OrganizationEntity@7eb2a97e]
+15-12-2022 08:56:19 INFO --- FileLogger : Method - getProjectsWithStudent, arguments: com.naukma.springproject.entity.OrganizationEntity@200f9143 com.naukma.springproject.entity.UserEntity@6c54182f
+15-12-2022 08:56:19 INFO --- FileLogger : Method return value: [com.naukma.springproject.entity.ProjectEntity@1d6df3ff->0, com.naukma.springproject.entity.ProjectEntity@739f1a8f->0, com.naukma.springproject.entity.ProjectEntity@4181e140->0]
+15-12-2022 08:56:19 INFO --- FileLogger : Method - getProjectsWithStudent, arguments: com.naukma.springproject.entity.OrganizationEntity@72e24ec4 com.naukma.springproject.entity.UserEntity@6c54182f
+15-12-2022 08:56:19 INFO --- FileLogger : Method return value: [com.naukma.springproject.entity.ProjectEntity@717ac027->0, com.naukma.springproject.entity.ProjectEntity@529108c8->0, com.naukma.springproject.entity.ProjectEntity@73c63270->0]
+15-12-2022 08:56:19 INFO --- FileLogger : Method - getProjectsWithStudent, arguments: com.naukma.springproject.entity.OrganizationEntity@7eb2a97e com.naukma.springproject.entity.UserEntity@6c54182f
+15-12-2022 08:56:19 INFO --- FileLogger : Method return value: [com.naukma.springproject.entity.ProjectEntity@301db2a2->0, com.naukma.springproject.entity.ProjectEntity@e06669c->0, com.naukma.springproject.entity.ProjectEntity@79a1bb0a->0]
+15-12-2022 08:56:39 INFO --- FileLogger : Method - getOrganizations, arguments: com.naukma.springproject.entity.UserEntity@22fa8464
+15-12-2022 08:56:39 INFO --- FileLogger : Method return value: []
