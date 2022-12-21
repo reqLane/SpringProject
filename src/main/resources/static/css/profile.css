@@ -91,3 +91,21 @@ input {
 .requestsList {
 
 }
+.link_option {
+    text-decoration: none;
+    color: black;
+    border: 1px black solid;
+    padding: 20px;
+    border-radius: 5px;
+    display: inline-block;
+    width: 70px;
+    text-align: center;
+    background-color: lightblue;
+    transition: .2s background-color;
+}
+a:visited {
+    color: black;
+}
+.link_option:hover {
+    background-color: aquamarine;
+}

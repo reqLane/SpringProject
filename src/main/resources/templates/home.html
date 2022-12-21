@@ -22,7 +22,7 @@
         <!--1.add org (org name)-->
         <div class="admin_panel_block">
 
-            <form class="form_default" th:action="@{/organization/register}" th:object="${orgToCreate}" method="post">
+            <form class="form_default" target="dummyframe" th:action="@{/organization/register}" th:object="${orgToCreate}" method="post">
                 <h3 class="form_name">Add New Organization</h3>
 
                 <div class="form_section">
@@ -35,7 +35,7 @@
             </form>
 
         <!--2.add student to org (org name + student login)-->
-            <form class="form_default" th:action="@{/organization/addStudent}" th:object="${studentToOrgPair}" method="post">
+            <form class="form_default" target="dummyframe" th:action="@{/organization/addStudent}" th:object="${studentToOrgPair}" method="post">
                 <h3 class="form_name">Add a Student to Organization</h3>
 
                 <div class="form_section">
@@ -52,7 +52,7 @@
             </form>
 
         <!--3.add project to org (org name + proj name)-->
-            <form class="form_default" th:action="@{/project/addTo}" th:object="${projectToOrgPair}" method="post">
+            <form class="form_default" target="dummyframe" th:action="@{/project/addTo}" th:object="${projectToOrgPair}" method="post">
                 <h3 class="form_name">Create New Project in Organization</h3>
 
                 <div class="form_section">
@@ -69,7 +69,7 @@
             </form>
 
         <!--4.add student to project (project name + student login)-->
-            <form class="form_default" th:action="@{/project/addStudent}" th:object="${studentToProjPair}" method="post">
+            <form class="form_default" target="dummyframe" th:action="@{/project/addStudent}" th:object="${studentToProjPair}" method="post">
                 <h3 class="form_name">Add a Student to a Project</h3>
 
                 <div class="form_section">
@@ -86,6 +86,7 @@
             </form>
 
         </div>
+        <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
     </div>
 </body>
 </html>
